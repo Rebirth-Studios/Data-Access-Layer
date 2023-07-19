@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketServer", "SocketServer\SocketServer.csproj", "{D820CCD5-91E3-4DD7-A486-9268E61E8A4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElysiumDatabas", "..\ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj", "{D73EBA64-43C7-412B-863B-DCB4A3DF8CA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElysiumDatabas", "ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj", "{D73EBA64-43C7-412B-863B-DCB4A3DF8CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElysiumEnums", "..\ElysiumDatabase\ElysiumEnums\ElysiumEnums.csproj", "{4147B352-5B4C-487E-A166-A71BDDAF3ABD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElysiumEnums", "ElysiumDatabase\ElysiumEnums\ElysiumEnums.csproj", "{4147B352-5B4C-487E-A166-A71BDDAF3ABD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayerClient", "DataAccessLayerClient\DataAccessLayerClient.csproj", "{832C98CF-EF70-4C43-9028-AFE9988304E7}"
 EndProject

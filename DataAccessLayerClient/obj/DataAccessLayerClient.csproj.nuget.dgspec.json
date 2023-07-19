@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj": {}
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj": {}
   },
   "projects": {
-    "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj",
-        "projectName": "ElysiumDatabas",
-        "projectPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj",
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj",
+        "projectName": "DataAccessLayerClient",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj",
         "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
-        "outputPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\obj\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,11 +26,144 @@
           "netstandard2.1": {
             "targetAlias": "netstandard2.1",
             "projectReferences": {
-              "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
-                "projectPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj"
+              "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj"
               },
-              "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj": {
-                "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj"
+              "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Microsoft.Build": {
+              "target": "Package",
+              "version": "[17.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Users\\Loganphx\\.dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj",
+        "projectName": "ElysiumDataAccessLayer.Models",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj",
+        "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj"
+              },
+              "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Microsoft.Build": {
+              "target": "Package",
+              "version": "[17.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Users\\Loganphx\\.dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj",
+        "projectName": "ElysiumDatabas",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj",
+        "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj"
               }
             }
           }
@@ -78,14 +211,14 @@
         }
       }
     },
-    "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj",
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj",
         "projectName": "ElysiumEnums",
-        "projectPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj",
         "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
-        "outputPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\obj\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -141,14 +274,14 @@
         }
       }
     },
-    "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj": {
+    "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj",
-        "projectName": "DataAccessLayerClient",
-        "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj",
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj",
+        "projectName": "ElysiumDatabas",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj",
         "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
-        "outputPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\obj\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -163,8 +296,11 @@
           "netstandard2.1": {
             "targetAlias": "netstandard2.1",
             "projectReferences": {
-              "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
-                "projectPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj"
+              "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj"
+              },
+              "C:\\Users\\Loganphx\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj": {
+                "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj"
               }
             }
           }
@@ -179,9 +315,17 @@
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
           "dependencies": {
-            "Microsoft.Build": {
+            "Microsoft.Build.Framework": {
               "target": "Package",
               "version": "[17.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.5, )"
             }
           },
           "imports": [
@@ -204,14 +348,14 @@
         }
       }
     },
-    "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj": {
+    "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj",
-        "projectName": "ElysiumDataAccessLayer.Models",
-        "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj",
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj",
+        "projectName": "ElysiumEnums",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj",
         "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
-        "outputPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\obj\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -225,11 +369,7 @@
         "frameworks": {
           "netstandard2.1": {
             "targetAlias": "netstandard2.1",
-            "projectReferences": {
-              "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj": {
-                "projectPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumEnums\\ElysiumEnums.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -242,13 +382,13 @@
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
           "dependencies": {
-            "Microsoft.Build": {
+            "Microsoft.Build.Framework": {
               "target": "Package",
               "version": "[17.4.0, )"
             },
-            "Newtonsoft.Json": {
+            "System.Data.SqlClient": {
               "target": "Package",
-              "version": "[13.0.2, )"
+              "version": "[4.1.0, )"
             }
           },
           "imports": [

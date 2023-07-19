@@ -1,0 +1,5 @@
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\netstandard2.0\ElysiumEnums.csproj.AssemblyReference.cache
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\netstandard2.0\ElysiumEnums.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\netstandard2.0\ElysiumEnums.AssemblyInfoInputs.cache
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\netstandard2.0\ElysiumEnums.AssemblyInfo.cs
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\netstandard2.0\ElysiumEnums.csproj.CoreCompileInputs.cache

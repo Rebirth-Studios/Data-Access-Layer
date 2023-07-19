@@ -1,0 +1,16 @@
+{
+    "name": "RebirthStudios.Enums",
+    "rootNamespace": "RebirthStudios",
+    "references": [
+        "GUID:821e1c7529d653143a98e2820cc08874"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

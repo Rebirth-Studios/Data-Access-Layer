@@ -638,7 +638,6 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "ElysiumDataAccessLayer.Models": "1.0.0",
-          "ElysiumEnums": "1.0.0",
           "Microsoft.Build.Framework": "17.4.0",
           "Newtonsoft.Json": "13.0.2",
           "System.Data.SqlClient": "4.8.5"
@@ -988,6 +987,7 @@
       "path": "runtime.win-arm64.runtime.native.system.data.sqlclient.sni/4.4.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -1003,6 +1003,7 @@
       "path": "runtime.win-x64.runtime.native.system.data.sqlclient.sni/4.4.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -1018,6 +1019,7 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -1646,13 +1648,13 @@
     },
     "ElysiumDatabas/1.0.0": {
       "type": "project",
-      "path": "../../ElysiumDatabase/ElysiumDatabas/ElysiumDatabas.csproj",
-      "msbuildProject": "../../ElysiumDatabase/ElysiumDatabas/ElysiumDatabas.csproj"
+      "path": "../ElysiumDatabase/ElysiumDatabas/ElysiumDatabas.csproj",
+      "msbuildProject": "../ElysiumDatabase/ElysiumDatabas/ElysiumDatabas.csproj"
     },
     "ElysiumEnums/1.0.0": {
       "type": "project",
-      "path": "../../ElysiumDatabase/ElysiumEnums/ElysiumEnums.csproj",
-      "msbuildProject": "../../ElysiumDatabase/ElysiumEnums/ElysiumEnums.csproj"
+      "path": "../ElysiumDatabase/ElysiumEnums/ElysiumEnums.csproj",
+      "msbuildProject": "../ElysiumDatabase/ElysiumEnums/ElysiumEnums.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1671,11 +1673,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Users\\logan\\RiderProjects\\SocketServer\\SocketServer\\SocketServer.csproj",
+      "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\SocketServer\\SocketServer.csproj",
       "projectName": "SocketServer",
-      "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\SocketServer\\SocketServer.csproj",
+      "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\SocketServer\\SocketServer.csproj",
       "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
-      "outputPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\SocketServer\\obj\\",
+      "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\SocketServer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1690,14 +1692,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
-              "projectPath": "E:\\Users\\logan\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj"
+            "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj": {
+              "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj"
             },
-            "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj": {
-              "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj"
+            "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessServer\\DataAccessServer.csproj": {
+              "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessServer\\DataAccessServer.csproj"
             },
-            "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessServer\\DataAccessServer.csproj": {
-              "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessServer\\DataAccessServer.csproj"
+            "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
+              "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj"
+            },
+            "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj": {
+              "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\ElysiumDatabase\\ElysiumDatabas\\ElysiumDatabas.csproj"
             }
           }
         }

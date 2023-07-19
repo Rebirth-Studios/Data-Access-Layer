@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cm0e3GATyQOeeApoW6wApFtInT8REW8eCGTu2AMQf5K2Wwwxcj8jGqR10rjVn38LpfSFed0basqmnqlZKaFhTw==",
+  "dgSpecHash": "dA7ni2FnuKkDajhCgchzUQZb0M089FC1SMfgmm9YdEhJsxTHb7MsDCWR8bQbsJlR43EmKBktESWUIh6VRNNe4Q==",
   "success": true,
-  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessLayerClient\\DataAccessLayerClient.csproj",
+  "projectFilePath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessLayerClient\\DataAccessLayerClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build\\17.4.0\\microsoft.build.17.4.0.nupkg.sha512",

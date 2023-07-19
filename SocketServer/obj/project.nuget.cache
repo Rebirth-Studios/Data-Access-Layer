@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gJoPWNPtrP1BcLw57FfTsR/Yhy+1yk1EUzPjDt1ELCOZKGfHs8aa82DEoMOp9a2tUZLyomKFw8TXFaL08Y3Qew==",
+  "dgSpecHash": "mMnG1JkPp6wm11yYTTjElqAgUNv+A8OJZvjw22RYTfC8aen1gsQkqilyyXbSdp9BAwtSM+evH7FquiZtyFYCKQ==",
   "success": true,
-  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\SocketServer\\SocketServer.csproj",
+  "projectFilePath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\SocketServer\\SocketServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Loganphx\\.nuget\\packages\\google.apis\\1.59.0\\google.apis.1.59.0.nupkg.sha512",
     "C:\\Users\\Loganphx\\.nuget\\packages\\google.apis.auth\\1.59.0\\google.apis.auth.1.59.0.nupkg.sha512",

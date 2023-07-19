@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5r4R29/vPXu/VlN9S+i2tdFlPOB/FFHwHKl5JrV50vluE3v1YbYCBdMAaiL0PHCWm5PHcJB4A5wMU8A70eaZeQ==",
+  "dgSpecHash": "B53zJVZtJAxXy+FIPX2/1kNNWEnFYk4ulTaojAfjTyof1F+kaafuHH2aH9ZNshM3DBAwIz91rk4im2/BuG6rtg==",
   "success": true,
-  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj",
+  "projectFilePath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ElysiumDataAccessLayer.Models\\ElysiumDataAccessLayer.Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build\\17.4.0\\microsoft.build.17.4.0.nupkg.sha512",

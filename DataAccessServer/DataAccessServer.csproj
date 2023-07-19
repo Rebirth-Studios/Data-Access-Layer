@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj" />
+      <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj" />
     </ItemGroup>
 
     <ItemGroup>

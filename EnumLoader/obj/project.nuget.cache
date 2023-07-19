@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lS/3bCANUS0u5nLKg1yNolIpmjEk8zi91mozW542VjHPl3ZgLi3w+RPLRyUvQ5MK1D8K/7WedOaPPcofILKsIw==",
+  "dgSpecHash": "ka8nwLhCQfbY1QclBmTtdeCLp2e1xhAmz9v1NHk52Q1aUxdEiCpjIBi2Mm0AiDkbKdxqgY4URaK0NsGZjyor2g==",
   "success": true,
-  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\EnumLoader\\EnumLoader.csproj",
+  "projectFilePath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\EnumLoader\\EnumLoader.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build\\17.4.0\\microsoft.build.17.4.0.nupkg.sha512",
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build.framework\\17.4.0\\microsoft.build.framework.17.4.0.nupkg.sha512",

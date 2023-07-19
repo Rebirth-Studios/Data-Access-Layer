@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lw3PotAqN8zKpjafPKHe8GVi+eDPS92ms7sPzRD4kg1bKu9R+hnA3kyJShWRj7w0EPbY8BRUSoYVa69/fvhMew==",
+  "dgSpecHash": "7yxFGGLE/8yvVDZmVbSUp4XvQVGC6/Yd7qZjz4dYy0LL8bqS+Q6ONA/Jc5N0zo96beYXm92WU/WmsjbLQqGE9w==",
   "success": true,
-  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\DataAccessServer\\DataAccessServer.csproj",
+  "projectFilePath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\DataAccessServer\\DataAccessServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build\\17.4.0\\microsoft.build.17.4.0.nupkg.sha512",
     "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build.framework\\17.4.0\\microsoft.build.framework.17.4.0.nupkg.sha512",

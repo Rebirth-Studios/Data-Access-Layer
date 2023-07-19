@@ -1,0 +1,15 @@
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.csproj.AssemblyReference.cache
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.AssemblyInfoInputs.cache
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.AssemblyInfo.cs
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.csproj.CoreCompileInputs.cache
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\bin\Release\net7.0\ElysiumEnums.exe
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\bin\Release\net7.0\ElysiumEnums.deps.json
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\bin\Release\net7.0\ElysiumEnums.runtimeconfig.json
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\bin\Release\net7.0\ElysiumEnums.dll
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\bin\Release\net7.0\ElysiumEnums.pdb
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.dll
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\refint\ElysiumEnums.dll
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.pdb
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ElysiumEnums.genruntimeconfig.cache
+C:\Users\logan\RiderProjects\ElysiumDatabase\ElysiumEnums\obj\Release\net7.0\ref\ElysiumEnums.dll

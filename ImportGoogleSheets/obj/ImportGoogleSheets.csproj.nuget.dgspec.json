@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Users\\logan\\RiderProjects\\SocketServer\\ImportGoogleSheets\\ImportGoogleSheets.csproj": {}
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ImportGoogleSheets\\ImportGoogleSheets.csproj": {}
   },
   "projects": {
-    "E:\\Users\\logan\\RiderProjects\\SocketServer\\ImportGoogleSheets\\ImportGoogleSheets.csproj": {
+    "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ImportGoogleSheets\\ImportGoogleSheets.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ImportGoogleSheets\\ImportGoogleSheets.csproj",
+        "projectUniqueName": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ImportGoogleSheets\\ImportGoogleSheets.csproj",
         "projectName": "ImportGoogleSheets",
-        "projectPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ImportGoogleSheets\\ImportGoogleSheets.csproj",
+        "projectPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ImportGoogleSheets\\ImportGoogleSheets.csproj",
         "packagesPath": "C:\\Users\\Loganphx\\.nuget\\packages\\",
-        "outputPath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ImportGoogleSheets\\obj\\",
+        "outputPath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ImportGoogleSheets\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Loganphx\\AppData\\Roaming\\NuGet\\NuGet.Config"

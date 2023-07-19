@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YMmR+91ql1TsUJGtsD7UeDNEhlnaBU2cEBWF9msrbQBsQWJOFHGJFLefvMLUTwiq8qS9RLkFc3lgPTsdswhpPg==",
+  "dgSpecHash": "3ewh13JCL27YIJrbtMXsnQO5G7G/3E2Hlv9768kfUyzdDdUECoXfk/AnTIaXgJigdeiFgf/QtdE5FcmlYHNRXQ==",
   "success": true,
-  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\ImportGoogleSheets\\ImportGoogleSheets.csproj",
+  "projectFilePath": "C:\\Users\\Loganphx\\RiderProjects\\Data-Access-Layer\\ImportGoogleSheets\\ImportGoogleSheets.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Loganphx\\.nuget\\packages\\google.apis\\1.59.0\\google.apis.1.59.0.nupkg.sha512",
     "C:\\Users\\Loganphx\\.nuget\\packages\\google.apis.auth\\1.59.0\\google.apis.auth.1.59.0.nupkg.sha512",

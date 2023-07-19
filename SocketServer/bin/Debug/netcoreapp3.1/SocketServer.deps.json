@@ -467,7 +467,6 @@
       "ElysiumDatabas/1.0.0": {
         "dependencies": {
           "ElysiumDataAccessLayer.Models": "1.0.0",
-          "ElysiumEnums": "1.0.0",
           "Microsoft.Build.Framework": "17.4.0",
           "Newtonsoft.Json": "13.0.2",
           "System.Data.SqlClient": "4.8.5"

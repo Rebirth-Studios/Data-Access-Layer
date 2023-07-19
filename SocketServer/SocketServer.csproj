@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj" />
+      <ProjectReference Include="..\DataAccessLayerClient\DataAccessLayerClient.csproj" />
+      <ProjectReference Include="..\DataAccessServer\DataAccessServer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Apis.Sheets.v4" Version="1.59.0.2909" />
+      <PackageReference Include="Microsoft.Build" Version="17.4.0" />
+      <PackageReference Include="System.CodeDom" Version="7.0.0" />
+    </ItemGroup>
+
+</Project>

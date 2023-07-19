@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "JYuKf519zEiwNV29mVZ07lNDx2z/Ld5y2ApveyUXgKfHGz3QLbC6X0f3xnxpeDCfylxORhWmyVPwsTcaz75aaQ==",
+  "success": true,
+  "projectFilePath": "E:\\Users\\logan\\RiderProjects\\SocketServer\\CopyBuildsToUnity\\CopyBuildsToUnity.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build\\17.4.0\\microsoft.build.17.4.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.build.framework\\17.4.0\\microsoft.build.framework.17.4.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.net.stringtools\\17.4.0\\microsoft.net.stringtools.17.4.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.0\\system.configuration.configurationmanager.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.reflection.metadata\\6.0.0\\system.reflection.metadata.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.reflection.metadataloadcontext\\6.0.0\\system.reflection.metadataloadcontext.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.security.cryptography.protecteddata\\6.0.0\\system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.security.permissions\\6.0.0\\system.security.permissions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.threading.tasks.dataflow\\6.0.0\\system.threading.tasks.dataflow.6.0.0.nupkg.sha512",
+    "C:\\Users\\Loganphx\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,26 @@
+public class DataTableStoredProcs
+    {
+    [RpcInvoke]
+    public static int TestMethod(string username, string password)
+    {
+CancellationToken cancellationToken = new CancellationToken();
+        var requestBytes = Encoding.ASCII.GetBytes(methodName);
+        Console.WriteLine(requestBytes.Length);
+        int bytesSent = 0; 
+    
+        await _socket.SendAsync(requestBytes, SocketFlags.None, cancellationToken);
+    
+        byte[] responseBytes = new byte[256];
+        char[] responseChars = new char[256];
+        // //
+        int bytesReceived = 1;
+        bytesReceived = await _socket.ReceiveAsync(responseBytes, SocketFlags.None);
+        var response = Encoding.ASCII.GetString(responseBytes[0..bytesReceived]); 
+        return response;
+    
+    [RpcInvoke]
+    public static string TestMethod1(string username, string password)
+    {
+        return "";
+    }   
+    }   

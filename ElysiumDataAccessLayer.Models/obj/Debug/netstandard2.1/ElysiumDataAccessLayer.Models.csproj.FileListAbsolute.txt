@@ -1,0 +1,13 @@
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.deps.json
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.dll
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.pdb
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumEnums.dll
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumEnums.pdb
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.AssemblyReference.cache
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.GeneratedMSBuildEditorConfig.editorconfig
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.AssemblyInfoInputs.cache
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.AssemblyInfo.cs
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.CoreCompileInputs.cache
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.CopyComplete
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.dll
+E:\Users\logan\RiderProjects\SocketServer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.pdb

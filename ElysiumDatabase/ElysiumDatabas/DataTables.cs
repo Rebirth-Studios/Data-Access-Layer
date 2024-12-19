@@ -539,7 +539,7 @@ namespace RebirthStudios.DataAccessLayer
         private const string LootTableTypesTableName = "lootTableTypes";
         public DataTable LootTableTypesDataTable;
 
-        private const string LootTableMainTypesTableName = "lootTableMainTypes";
+        private const string LootTableMainTypesTableName = "lootTableClassificationTypes";
         public DataTable LootTableMainTypesDataTable;
 
         private const string MaterialTypesTableName = "materialTypes";
@@ -2263,7 +2263,7 @@ INDEX {ignoreConstraintName} ON {tblName} DISABLE";
         #region BATCH DELETE, UPDATE, INSERT
         //MUST BE DONE IN ORDER, DELETE, UPDATE, INSERT
 
-        private const string ConnectionString = @"Data Source=localhost\ELYSIUM;Initial Catalog=Elysium_DEV;User id=Elysium;Password=PoliceBox21;";
+        private const string ConnectionString = @"Data Source=192.168.2.197,1445\ELYSIUM;User id=SA;Password=PoliceBox21;Initial Catalog=Elysium_DEV";
         private IDbConnection _connection;
 
         public IDbConnection Connection

@@ -7,12 +7,12 @@ namespace RebirthStudios.Enums
 		[RebirthName("None")]
 		[RebirthDescription("None")]
 		None = 0,
-		[RebirthName("Achievement")]
+		[RebirthName("Award Achievement")]
 		[RebirthDescription("Award Achievement")]
-		Achievement = 1,
-		[RebirthName("Title")]
+		AwardAchievement = 1,
+		[RebirthName("Award Title")]
 		[RebirthDescription("Award Title")]
-		Title = 2,
+		AwardTitle = 2,
 		MAX_VALUE = 3,
 	}
 }

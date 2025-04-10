@@ -2,18 +2,21 @@ namespace RebirthStudios.Enums
 {
 	public enum EffectAmountType : byte
 	{
+		[RebirthName("None")]
+		[RebirthDescription("None")]
+		None = 0,
 		[RebirthName("Append")]
 		[RebirthDescription("Adds or Subtracts")]
-		Append = 0,
+		Append = 1,
 		[RebirthName("Set")]
 		[RebirthDescription("Sets")]
-		Set = 1,
+		Set = 2,
 		[RebirthName("PercentageAdditive")]
 		[RebirthDescription("PercentageAdditive")]
-		PercentageAdditive = 2,
+		PercentageAdditive = 3,
 		[RebirthName("PercentageMultiplicative")]
 		[RebirthDescription("PercentageMultiplicative")]
-		PercentageMultiplicative = 3,
-		MAX_VALUE = 4,
+		PercentageMultiplicative = 4,
+		MAX_VALUE = 5,
 	}
 }

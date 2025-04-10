@@ -28,3 +28,13 @@ C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\o
 C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.csproj.CoreCompileInputs.cache
 C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.dll
 C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.pdb
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\bin\Debug\netstandard2.1\ElysiumEnums.deps.json
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\bin\Debug\netstandard2.1\ElysiumEnums.dll
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\bin\Debug\netstandard2.1\ElysiumEnums.pdb
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.csproj.AssemblyReference.cache
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.AssemblyInfoInputs.cache
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.AssemblyInfo.cs
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.csproj.CoreCompileInputs.cache
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.dll
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.pdb

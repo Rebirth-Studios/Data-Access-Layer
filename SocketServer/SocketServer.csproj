@@ -11,7 +11,7 @@
     <ItemGroup>
       <ProjectReference Include="..\DataAccessLayerClient\DataAccessLayerClient.csproj" />
       <ProjectReference Include="..\DataAccessServer\DataAccessServer.csproj" />
-      <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj" />
+      <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabase\ElysiumDatabase.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -7,24 +7,24 @@ namespace RebirthStudios.Enums.WorldObjects
 		[RebirthName("None")]
 		[RebirthDescription("None")]
 		None = 0,
-		[RebirthName("Ore Vein")]
+		[RebirthName("Mining")]
 		[RebirthDescription("Ore Vein")]
-		OreVein = 1,
+		Mining = 1,
 		[RebirthName("Gemstone Cluster")]
 		[RebirthDescription("Gemstone Cluster")]
 		GemstoneCluster = 2,
-		[RebirthName("Stone")]
+		[RebirthName("Stonecutting")]
 		[RebirthDescription("Tree")]
-		Stone = 3,
-		[RebirthName("Herb")]
+		Stonecutting = 3,
+		[RebirthName("Herbalism")]
 		[RebirthDescription("Herbs")]
-		Herb = 4,
-		[RebirthName("Tree")]
+		Herbalism = 4,
+		[RebirthName("Woodcutting")]
 		[RebirthDescription("Tree")]
-		Tree = 5,
-		[RebirthName("Herb")]
+		Woodcutting = 5,
+		[RebirthName("Skinning")]
 		[RebirthDescription("Herbs")]
-		Bamboo = 6,
+		Skinning = 6,
 		MAX_VALUE = 7,
 	}
 }

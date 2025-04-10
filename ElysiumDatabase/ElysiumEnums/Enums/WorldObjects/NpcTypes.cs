@@ -10,6 +10,9 @@ namespace RebirthStudios.Enums.WorldObjects
 		Vendor = 1,
 		[RebirthName("Quest Giver")]
 		QuestGiver = 2,
-		MAX_VALUE = 3,
+		[RebirthName("General")]
+		[RebirthDescription("General")]
+		General = 3,
+		MAX_VALUE = 4,
 	}
 }

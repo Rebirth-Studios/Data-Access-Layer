@@ -33,7 +33,7 @@ namespace RebirthStudios.Enums.Stats
 		CurrentStats = 8,
 		[RebirthName("Damage")]
 		[RebirthDescription("Damage")]
-		DamageType = 9,
+		Damage = 9,
 		[RebirthName("Damage Reduction")]
 		[RebirthDescription("Damage Reduction")]
 		DamageReduction = 10,

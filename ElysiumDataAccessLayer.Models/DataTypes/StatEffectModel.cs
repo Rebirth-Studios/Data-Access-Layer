@@ -7,9 +7,9 @@ namespace RebirthStudios.DataAccessLayer.Models
         [JsonProperty] public byte EffectSubType { get; set; }
         [JsonProperty] public byte StatId { get; set; }
         [JsonProperty] public byte ValueType { get; set; }
-        [JsonProperty] public int  Value { get; set; }
+        [JsonProperty] public decimal  Value { get; set; }
 
-        public StatEffectModel(byte effectSubType, byte statId, byte valueType, int value)
+        public StatEffectModel(byte effectSubType, byte statId, byte valueType, decimal value)
         {
             EffectSubType = effectSubType;
             StatId        = statId;

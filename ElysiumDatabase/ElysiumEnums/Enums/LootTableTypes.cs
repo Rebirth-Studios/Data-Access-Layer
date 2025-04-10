@@ -6,13 +6,13 @@ namespace RebirthStudios.Enums
 	{
 		[RebirthName("None")]
 		None = 0,
-		[RebirthName("Gathering")]
+		[RebirthName("Gatherable")]
 		[RebirthDescription("Gathering / Harvesting")]
-		Gathering = 1,
-		[RebirthName("Combat")]
-		Combat = 2,
-		[RebirthName("Treasure")]
-		Treasure = 3,
+		Gatherable = 1,
+		[RebirthName("Entity")]
+		Entity = 2,
+		[RebirthName("Container")]
+		Container = 3,
 		MAX_VALUE = 4,
 	}
 }

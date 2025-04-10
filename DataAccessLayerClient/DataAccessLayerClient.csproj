@@ -10,7 +10,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ElysiumDataAccessLayer.Models\ElysiumDataAccessLayer.Models.csproj" />
-      <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabas\ElysiumDatabas.csproj" />
+      <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabase\ElysiumDatabase.csproj" />
     </ItemGroup>
 
 </Project>

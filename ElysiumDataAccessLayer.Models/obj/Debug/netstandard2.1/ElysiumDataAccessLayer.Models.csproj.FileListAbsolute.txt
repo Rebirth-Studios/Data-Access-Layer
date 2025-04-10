@@ -24,3 +24,16 @@ C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\
 C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.CopyComplete
 C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.dll
 C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.pdb
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.deps.json
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.dll
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.pdb
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumEnums.dll
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\bin\Debug\netstandard2.1\ElysiumEnums.pdb
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.AssemblyReference.cache
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.AssemblyInfoInputs.cache
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.AssemblyInfo.cs
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.CoreCompileInputs.cache
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.csproj.CopyComplete
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.dll
+C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDataAccessLayer.Models\obj\Debug\netstandard2.1\ElysiumDataAccessLayer.Models.pdb

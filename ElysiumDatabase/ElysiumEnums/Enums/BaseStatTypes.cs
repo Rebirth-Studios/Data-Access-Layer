@@ -52,7 +52,7 @@
 		[RebirthName("Base Critical Damage")]
 		[RebirthDescription("Base Critical Damage")]
 		CriticalDamage = 15,
-		[RebirthName("Base Critical Damage")]
+		[RebirthName("Base Critical Chance")]
 		[RebirthDescription("Base Critical Damage")]
 		CriticalChance = 16,
 		[RebirthName("Base Crafting Quality")]

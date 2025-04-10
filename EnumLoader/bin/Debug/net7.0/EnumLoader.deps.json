@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "EnumLoader/1.0.0": {
         "dependencies": {
-          "ElysiumDatabas": "1.0.0"
+          "ElysiumDatabase": "1.0.0"
         },
         "runtime": {
           "EnumLoader.dll": {}
@@ -285,7 +285,7 @@
           "ElysiumDataAccessLayer.Models.dll": {}
         }
       },
-      "ElysiumDatabas/1.0.0": {
+      "ElysiumDatabase/1.0.0": {
         "dependencies": {
           "ElysiumDataAccessLayer.Models": "1.0.0",
           "Microsoft.Build.Framework": "17.4.0",
@@ -293,7 +293,7 @@
           "System.Data.SqlClient": "4.8.5"
         },
         "runtime": {
-          "ElysiumDatabas.dll": {}
+          "ElysiumDatabase.dll": {}
         }
       },
       "ElysiumEnums/1.0.0": {
@@ -507,7 +507,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "ElysiumDatabas/1.0.0": {
+    "ElysiumDatabase/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

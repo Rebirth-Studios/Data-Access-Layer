@@ -7,15 +7,15 @@ namespace RebirthStudios.Enums
 		[RebirthName("None")]
 		[RebirthDescription("None")]
 		None = 0,
-		[RebirthName(" Ability")]
+		[RebirthName("Unlock Ability")]
 		[RebirthDescription("Used by Consumables to Unlock Abilities")]
-		Ability = 1,
-		[RebirthName("Skill")]
+		UnlockAbility = 1,
+		[RebirthName("Unlock Skill")]
 		[RebirthDescription("Used by Consumables to Unlock Skills")]
-		Skill = 2,
-		[RebirthName("Recipe")]
+		UnlockSkill = 2,
+		[RebirthName("Unlock Recipe")]
 		[RebirthDescription("Used by Consumables to Unlock Recipes")]
-		Recipe = 3,
+		UnlockRecipe = 3,
 		MAX_VALUE = 4,
 	}
 }

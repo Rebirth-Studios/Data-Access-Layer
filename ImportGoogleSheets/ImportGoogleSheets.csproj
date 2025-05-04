@@ -9,7 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="Google.Apis.Sheets.v4" Version="1.59.0.2909" />
-      <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum AbilityDifficultyTiersColumns : byte
+	internal enum AbilityDifficultyTiersColumns : byte
 	{
 		abilityDifficultyTierId = 0,
 		abilityDifficultyTier = 1,

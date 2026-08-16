@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum InstancedMissionsColumns : byte
+	internal enum InstancedMissionsColumns : byte
 	{
 		characterQuestId = 0,
 		characterQuestTitle = 1,

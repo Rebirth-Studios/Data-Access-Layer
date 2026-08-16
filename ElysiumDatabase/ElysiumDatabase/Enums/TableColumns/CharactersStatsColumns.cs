@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CharactersStatsColumns : byte
+	internal enum CharactersStatsColumns : byte
 	{
 		characterStatId = 0,
 		characterStatTypeId = 1,

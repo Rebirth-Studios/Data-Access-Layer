@@ -12,6 +12,7 @@ using RebirthStudios.Enums.Items.Weapons;
 using RebirthStudios.Enums.Skills;
 using RebirthStudios.Enums.Stats;
 using RebirthStudios.Enums.WorldObjects;
+using RebirthStudios.Logging;
 using RebirthStudios.ScriptableObjects;
 
 namespace RebirthStudios.DataAccessLayer.Enums
@@ -28,9 +29,9 @@ namespace RebirthStudios.DataAccessLayer.Enums
             var files = Directory.GetFiles(sqlEnumDirectory, "*", SearchOption.AllDirectories);
             foreach (var dataTable in tables)
             {
-                var first = files.FirstOrDefault(t => t.Contains(dataTable.ToLower()));
+                var first = files.FirstOrDefault(t => t.Contains(dataTable.ToLower(), StringComparison.InvariantCultureIgnoreCase));
 
-                //Debug.Log($"CreateEnums.{dataTable} vs {first}");
+                Console.WriteLine($"CreateEnums.{dataTable} vs {first}");
                 if (first != default)
                 {
                     continue;
@@ -38,10 +39,10 @@ namespace RebirthStudios.DataAccessLayer.Enums
 
                 var fileName = $"{$"{dataTable[0]}".ToUpper()}{dataTable[1..]}Columns";
                 var t = File.CreateText($"{sqlEnumDirectory}/TableColumns/{fileName}.cs");
-                //_logger.Log($"Creating {fileName}.cs");
+                _logger.Log($"Creating {fileName}.cs");
                 t.WriteLine($@"namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {{
-    public enum {fileName} : byte
+    internal enum {fileName} : byte
 	{{
 
     }}
@@ -56,6 +57,7 @@ namespace RebirthStudios.DataAccessLayer.Enums
         private static string baseFolder = solutionDirectory.Replace("\\EnumLoader\\bin", "");
         private static string gameEnumDirectory = baseFolder + "\\ElysiumDatabase\\ElysiumEnums\\Enums";
         private static string sqlEnumDirectory = baseFolder + "\\ElysiumDatabase\\ElysiumDatabase\\Enums";
+        private static string sqlTableColumnsDirectory = baseFolder + "\\ElysiumDatabase\\ElysiumDatabase\\Enums\\TableColumns";
         
         //private static string gameEnumDirectory = "C:\\Users\\ericr\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumEnums\\Enums";
         //private static string sqlEnumDirectory = "C:\\Users\\ericr\\RiderProjects\\Data-Access-Layer\\ElysiumDatabase\\ElysiumDatabase\\Enums";
@@ -70,12 +72,11 @@ namespace RebirthStudios.DataAccessLayer.Enums
             _logger.Log("EnumLoader.Initialize");
             //LoadLayers();
             LoadTags();
-
-            #region Table Columns
-
+            
             List<DataTable> tables = dataTables._dataSet.Tables.Cast<DataTable>().ToList();
       
-            CreateEnums(tables.Select(t => t.TableName).ToList());
+            var tableNames = tables.Select(t => t.TableName).ToList();
+            CreateEnums(tableNames);
             
             foreach (var table in tables)
             {
@@ -88,82 +89,18 @@ namespace RebirthStudios.DataAccessLayer.Enums
                 }
 
                 var properName = table.TableName[0].ToString().ToUpper() + table.TableName[1..] + "Columns";
-                LoadSqlEnum(properName, enumDatas, false);
-
-                if (properName == "SpawnablesToLootTablesColumns")
-                {
-                    
-                }
+                LoadSqlEnum(properName, enumDatas, false, "internal");
             }
-            // LoadEnum<CharactersColumns>(, false);
-            // LoadEnum<CharactersAbilitiesColumns>(, false);
-            // LoadEnum<CharactersAchievementColumns>(, false);
-            // LoadEnum<CharactersBuybacksColumns>(, false);
-            // LoadEnum<CharactersMailColumns>(, false);
-            // LoadEnum<CharactersMailAttachmentsColumns>(, false);
-            // LoadEnum<CharactersMissionsColumns>(, false);
-            // LoadEnum<CharactersQuestsColumns>(, false);
-            // LoadEnum<CharactersQuestObjectivesColumns>(, false);
-            // LoadEnum<CharactersRecipesColumns>(, false);
-            // LoadEnum<CharactersSkillsColumns>(, false);
-            // LoadEnum<CharactersSocialColumns>(, false);
-            // LoadEnum<CharactersStatsColumns>(, false);
-            // LoadEnum<CharactersTitlesColumns>(, false);
-            //
-            // LoadEnum<EffectGroupsColumns>(, false);
-            // LoadEnum<EffectGroupsToGearSetMappingColumns>(, false);
-            // LoadEnum<EffectGroupsToItemsMappingColumns>(, false);
-            // LoadEnum<EffectGroupsToObjectsMappingColumns>(, false);
-            // LoadEnum<EffectsColumns>(, false);
-            // LoadEnum<EffectsToEffectGroupsMappingColumns>(, false);
-            //
-            // LoadEnum<EntityStatsColumns>(, false);
-            // LoadEnum<EquipmentMaterialModifiersColumns>(, false);
-            // LoadEnum<EquipmentRequirementGroupsColumns>(, false);
-            // LoadEnum<ExperienceEffectsColumns>(, false);
-            //
-            // LoadEnum<GlobalFactions>(, false);
-            // LoadEnum<GlobalObjectsColumns>(, false);
-            // LoadEnum<GlobalRanksColumns>(, false);
-            // LoadEnum<GlobalStatsColumns>(, false);
-            // LoadEnum<GlobalStatusesColumns>(, false);
-            // LoadEnum<GlobalTiersColumns>(, false);
-            //
-            // LoadEnum<HistoryCharacterCollectedColumns>(, false);
-            // LoadEnum<HistoryCharacterCombatColumns>(, false);
-            // LoadEnum<HistoryCharacterCraftedColumns>(, false);
-            // LoadEnum<HistoryCharacterDeathsColumns>(, false);
-            // LoadEnum<HistoryCharacterGatheredColumns>(, false);
-            // LoadEnum<HistoryCharacterKillsColumns>(, false);
-            // LoadEnum<HistoryCharacterLootColumns>(, false);
-            // LoadEnum<HistoryCharacterQuestsColumns>(, false);
-            // LoadEnum<HistoryCurrencyTransactionsColumns>(, false);
-            //
-            // LoadEnum<IconsColumns>(, false);
-            // LoadEnum<InstancedAmmunitionColumns>(, false);
-            // LoadEnum<InstancedArmorColumns>(, false);
-            // LoadEnum<InstancedBagsColumns>(, false);
-            // LoadEnum<InstancedConsumablesColumns>(, false);
-            // LoadEnum<InstancedEquipmentColumns>(, false);
-            // LoadEnum<InstancedGeneralItemsColumns>(, false);
-            // LoadEnum<InstancedItemsColumns>(DataTableStoredProcs.Tables_InstanceItems_GetColumns(), false);
-            // LoadEnum<InstancedItemsIngredientsColumns>(, false);
-            // LoadEnum<InstancedMaterialsColumns>(, false);
-            // LoadEnum<InstancedMissionsColumns>(, false);
-            // LoadEnum<InstancedWeaponsColumns>(, false);
-            //
-            // LoadEnum<LevelRequirementsColumns>(, false);
-
-            #endregion
-
+            
+            // TODO Put in a check to make sure every enum is mapped here.
+            
             int index = 0;
-            /*
             LoadEnum<ScriptableItems>(DataTableStoredProcs.ScriptableItems_GetList().Select(t => new EnumData(t.GlobalObject, null, null)).ToDictionary(data =>
             {
                 index++;
                 return index-1;
             }), false);
-            */
+      
             LoadEnum<RarityTypes>(DataTableStoredProcs.RarityTypes_GetList());
             LoadEnum<QualityTypes>(DataTableStoredProcs.QualityTypes_GetList());
 
@@ -416,11 +353,11 @@ namespace RebirthStudios.DataAccessLayer.Enums
 
             LoadEnum(enumName, enumData, enumPaths, null,includeMax);
         }     
-        private static void LoadSqlEnum(string enumName, Dictionary<int, EnumData> enumData, bool includeMax = true)
+        private static void LoadSqlEnum(string enumName, Dictionary<int, EnumData> enumData, bool includeMax = true, string enumAccessType = "public")
         {
             string[]   enumPaths = Directory.GetFiles(sqlEnumDirectory, $"{enumName}.cs", SearchOption.AllDirectories);
 
-            LoadEnum(enumName, enumData, enumPaths, "",includeMax, "public");
+            LoadEnum(enumName, enumData, enumPaths, "",includeMax, enumAccessType);
         }
 
      

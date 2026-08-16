@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableRequirementsColumns : byte
+	internal enum ScriptableRequirementsColumns : byte
 	{
 		scriptableRequirementId = 0,
 		requiredForGlobalObject = 1,

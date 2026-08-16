@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum HistoryCurrencyTransactionsColumns : byte
+	internal enum HistoryCurrencyTransactionsColumns : byte
 	{
 		historyCurrencyTransactionId = 0,
 		transactionDate = 1,

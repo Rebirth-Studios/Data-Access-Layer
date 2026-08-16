@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum SpawnedWorldObjectsCurrencyColumns : byte
+	internal enum SpawnedWorldObjectsCurrencyColumns : byte
 	{
 		spawnedWorldObjectsCurrencyId = 0,
 		lastUpdate = 1,

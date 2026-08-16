@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableTotalsGatherColumns : byte
+	internal enum ScriptableTotalsGatherColumns : byte
 	{
 		gatherMainTypeId = 0,
 		gatherClassificationTypeId = 1,

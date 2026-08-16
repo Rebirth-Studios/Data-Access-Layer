@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableMonstersColumns : byte
+	internal enum ScriptableMonstersColumns : byte
 	{
 		globalObject = 0,
 		monsterMainTypeId = 1,

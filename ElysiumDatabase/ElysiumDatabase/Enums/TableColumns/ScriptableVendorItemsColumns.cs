@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableVendorItemsColumns : byte
+	internal enum ScriptableVendorItemsColumns : byte
 	{
 		scriptableVendorItemId = 0,
 		npcGlobalObject = 1,

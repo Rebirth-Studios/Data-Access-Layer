@@ -1,15 +1,13 @@
 using System.Net.Sockets;
     using System.Text;
     using System;
-    using System.Threading.Tasks;
     using System.Collections.Generic;
-    using System.Threading;
     using System.Diagnostics;
+    using ElysiumDataAccessLayer.Models.DataTypes;
     using Newtonsoft.Json;
-    using RebirthStudios.DataAccessLayer;
     using RebirthStudios.DataAccessLayer.Models;
+    using RebirthStudios.Logging;
     using RebirthStudios.Enums;
-    using RebirthStudios.Enums.Items;
 
     public class Client_DataTableStoredProcs
         {

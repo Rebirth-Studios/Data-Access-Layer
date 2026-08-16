@@ -1,5 +1,6 @@
 ﻿using RebirthStudios.DataAccessLayer;
 using RebirthStudios.DataAccessLayer.Enums;
+using RebirthStudios.Logging;
 
 var logger = new Logger
 {

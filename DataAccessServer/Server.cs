@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using RebirthStudios.DataAccessLayer;
+using RebirthStudios.Logging;
 
 public class StateObject
 {

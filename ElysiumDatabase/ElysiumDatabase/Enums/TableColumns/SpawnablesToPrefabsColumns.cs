@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum SpawnablesToPrefabsColumns : byte
+	internal enum SpawnablesToPrefabsColumns : byte
 	{
 		globalObject = 0,
 		scriptableObjectSpawnable = 1,

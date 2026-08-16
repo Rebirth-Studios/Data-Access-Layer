@@ -3,8 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.Reflection;
+using Microsoft.Data.SqlClient;
+using RebirthStudios.DataAccessLayer.Configuration;
 using RebirthStudios.DataAccessLayer.Enums.TableColumns;
+using RebirthStudios.Logging;
 using RebirthStudios.RebirthStudios.Core.Enums.TableColumns;
 
 namespace RebirthStudios.DataAccessLayer
@@ -15,77 +18,6 @@ namespace RebirthStudios.DataAccessLayer
         
     }
 
-    public interface ILogger
-    {
-        public void Log(string message);
-        public void LogProfiling(string message);
-        public void LogDebug(string message);
-        public void LogWarning(string message);
-        public void LogError(string message);
-        public void LogException(Exception e);
-    }
-    
-    public class Logger : ILogger
-    {
-        public Action<string> LogMethod { get; set; }
-        public Action<string> LogProfilingMethod { get; set; }
-        public Action<string> LogDebugMethod { get; set; }
-        public Action<string> LogWarningMethod { get; set; }
-        public Action<string> LogErrorMethod { get; set; }
-        public Action<Exception> LogExceptionMethod { get; set; }
-        
-        public void Log(string message)
-        {
-            LogMethod.Invoke(message);
-        }
-        public void LogProfiling(string message)
-        {
-            LogProfilingMethod.Invoke(message);
-        } 
-       public void LogDebug(string message)
-        {
-            LogDebugMethod.Invoke(message);
-        }
-
-        public void LogWarning(string      message)
-        {
-            LogWarningMethod.Invoke(message);
-        }
-
-        public void LogError(string        message)
-        {
-            LogErrorMethod.Invoke(message);
-        }
-
-        public void LogException(Exception e)
-        {
-            LogExceptionMethod.Invoke(e);
-        }
-    } 
-    public class RebirthConnection : IDbConnection
-    {
-        public RebirthConnection(ILogger logger, string connectionString)
-        {
-        
-            try
-            {
-                Connection = new SqlConnection(connectionString);
-                Connection.Open();
-            }
-            catch (Exception e)
-            {
-                logger.LogException(e);
-            }
-        }
-
-        public SqlConnection   Connection { get; set; }
-        public ConnectionState State      => Connection.State;
-
-        public void Dispose()
-        {
-            Connection.Dispose();
-        }
-    }
     public class DataTables : IDisposable
     {
         private ILogger Logger { get; set; }
@@ -228,8 +160,8 @@ namespace RebirthStudios.DataAccessLayer
 
         private const string HistoryCharacterQuestsTableName = "historyCharacterQuests";
         public DataTable HistoryCharacterQuestsDataTable;
-        private SqlCommand HistoryCharacterQuestsTableUpdate;
-        private SqlCommand HistoryCharacterQuestsTableInsert;
+        private SqlCommand _historyCharacterQuestsTableUpdate;
+        private SqlCommand _historyCharacterQuestsTableInsert;
 
         private const string HistoryCurrencyTransactionsTableName = "historyCurrencyTransactions";
         public DataTable HistoryCurrencyTransactionsDataTable;
@@ -1123,7 +1055,7 @@ namespace RebirthStudios.DataAccessLayer
             ScriptableSkillsDataTable = FillTable(_dataSet, ScriptableSkillsTableName);
             ScriptableTitlesDataTable = FillTable(_dataSet, ScriptableTitlesTableName);
             // ITEMS
-            ScriptableItemsDataTable = FillTableUsingStoredProcedure(_dataSet, "spScriptableItems"); 
+            ScriptableItemsDataTable = FillTable(_dataSet, ScriptableItemsTableName); 
             
             ScriptableBagsDataTable = FillTable(_dataSet, ScriptableBagsTableName); 
             ScriptableConsumablesDataTable = FillTable(_dataSet, ScriptableConsumablesTableName); 
@@ -1383,7 +1315,7 @@ namespace RebirthStudios.DataAccessLayer
             {
                 command.Connection  = (Connection as RebirthConnection)!.Connection;
                 command.CommandType = CommandType.Text;
-                command.CommandText = $"SELECT * FROM {tableName}";
+                command.CommandText = $"SELECT * FROM {DatabaseSchemas.QualifyTable(tableName)}";
                 using (var dataAdapter = new SqlDataAdapter(command))
                 {
                     dataAdapter.FillSchema(dtTempTable, SchemaType.Source);
@@ -1437,7 +1369,7 @@ namespace RebirthStudios.DataAccessLayer
                     EffectsToEffectGroupsMappingColumns.effectGlobalObject.ToString());
             
             EffectGroupsToObjectsMappingDictionary = EffectGroupsToObjectsMappingDataTable.ToDictionary<string, byte>(
-                EffectGroupsToObjectsMappingColumns.scriptableObjectLevel.ToString(),
+                EffectGroupsToObjectsMappingColumns.abilityGlobalObject.ToString(),
                 EffectGroupsToObjectsMappingColumns.levelId.ToString());
             GlobalObjectsDictionary = GlobalObjectsDataTable.ToDictionary<string>(GlobalObjectsColumns.globalObject.ToString());
             
@@ -1628,6 +1560,18 @@ namespace RebirthStudios.DataAccessLayer
             var sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterKillsDataTable.TableName, sqlColumns);
             _historyCharacterKillsTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
             
+            sqlColumns = GetListSqlTableColumns(HistoryCharacterLootDataTable.TableName);
+            sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCharacterLootDataTable.TableName, sqlColumns);
+            _historyCharacterLootTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
+            sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterLootDataTable.TableName, sqlColumns);
+            _historyCharacterLootTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
+
+            sqlColumns = GetListSqlTableColumns(HistoryCurrencyTransactionsDataTable.TableName);
+            sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCurrencyTransactionsDataTable.TableName, sqlColumns);
+            _historyCharacterQuestsTableUpdate = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
+            sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCurrencyTransactionsDataTable.TableName, sqlColumns);
+            _historyCurrencyTransactionsTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
+
             sqlColumns = GetListSqlTableColumns(HistoryCurrencyTransactionsDataTable.TableName);
             sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCurrencyTransactionsDataTable.TableName, sqlColumns);
             _historyCurrencyTransactionsTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
@@ -1640,6 +1584,18 @@ namespace RebirthStudios.DataAccessLayer
             sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterCollectedDataTable.TableName, sqlColumns);
             _historyCharacterCollectedTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
             
+            sqlColumns = GetListSqlTableColumns(HistoryCharacterCombatDataTable.TableName);
+            sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCharacterCombatDataTable.TableName, sqlColumns);
+            _historyCharacterCombatTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
+            sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterCombatDataTable.TableName, sqlColumns);
+            _historyCharacterCombatTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
+            
+            sqlColumns = GetListSqlTableColumns(HistoryCharacterDeathsDataTable.TableName);
+            sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCharacterDeathsDataTable.TableName, sqlColumns);
+            _historyCharacterDeathsTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
+            sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterDeathsDataTable.TableName, sqlColumns);
+            _historyCharacterDeathsTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
+            
             sqlColumns = GetListSqlTableColumns(HistoryCharacterGatheredDataTable.TableName);
             sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCharacterGatheredDataTable.TableName, sqlColumns);
             _historyCharacterGatheredTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
@@ -1651,6 +1607,12 @@ namespace RebirthStudios.DataAccessLayer
             _historyCharacterCraftedTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
             sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterCraftedDataTable.TableName, sqlColumns);
             _historyCharacterCraftedTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
+            
+            sqlColumns = GetListSqlTableColumns(HistoryCharacterQuestsDataTable.TableName);
+            sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCharacterQuestsDataTable.TableName, sqlColumns);
+            _historyCharacterQuestsTableInsert = SqlCommandAddParameters(sqlInsertCommandText, sqlColumns);
+            sqlUpdateCommandText = BuildUpdateSqlStatement(HistoryCharacterQuestsDataTable.TableName, sqlColumns);
+            _historyCharacterQuestsTableUpdate = SqlCommandAddParameters(sqlUpdateCommandText, sqlColumns);
             
             sqlColumns = GetListSqlTableColumns(HistoryCharacterKillsDataTable.TableName);
             sqlInsertCommandText = BuildInsertSqlStatement_Identity(HistoryCharacterKillsDataTable.TableName, sqlColumns);
@@ -1830,11 +1792,15 @@ namespace RebirthStudios.DataAccessLayer
         {
             List<SqlData> sqlColumns = new List<SqlData>();
 
-            //Query
-            var query = $"SELECT COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tblName}'";
+            const string query = "SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE " +
+                                 "FROM INFORMATION_SCHEMA.COLUMNS " +
+                                 "WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName " +
+                                 "ORDER BY ORDINAL_POSITION";
 
             using (var cmd = new SqlCommand(query, (Connection as RebirthConnection)!.Connection))
             {
+                cmd.Parameters.AddWithValue("@tableSchema", DatabaseSchemas.GetTableSchema(tblName));
+                cmd.Parameters.AddWithValue("@tableName", tblName);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -1872,8 +1838,7 @@ namespace RebirthStudios.DataAccessLayer
 
         private string BuildInsertSqlStatement(string tblName, List<SqlData> sqlColumns, bool skipFirstValue=false)
         {
-            
-            string insertStringTest = $"Insert into [dbo].[{tblName}](";
+            string insertStringTest = $"Insert into {DatabaseSchemas.QualifyTable(tblName)}(";
             bool skipSecondValue = skipFirstValue;
             int firstName = 0;
             foreach (var sqlData in sqlColumns)
@@ -1906,8 +1871,9 @@ namespace RebirthStudios.DataAccessLayer
        
         private string BuildInsertSqlStatement_Identity(string tblName, List<SqlData> sqlColumns)
         {
-            string insertStringTest = $"SET IDENTITY_INSERT [dbo].[{tblName}] ON\n";
-            insertStringTest += $"Insert into [dbo].[{tblName}](";
+            var qualifiedTable = DatabaseSchemas.QualifyTable(tblName);
+            string insertStringTest = $"SET IDENTITY_INSERT {qualifiedTable} ON\n";
+            insertStringTest += $"Insert into {qualifiedTable}(";
 
             int firstName = 0;
             foreach (var sqlData in sqlColumns)
@@ -1928,7 +1894,7 @@ namespace RebirthStudios.DataAccessLayer
             }
 
             insertStringTest += ")\n";
-            insertStringTest += $"SET IDENTITY_INSERT [dbo].[{tblName}] OFF";
+            insertStringTest += $"SET IDENTITY_INSERT {qualifiedTable} OFF";
             return insertStringTest;
         }
         
@@ -1944,7 +1910,7 @@ namespace RebirthStudios.DataAccessLayer
                 updateString += $@"INDEX {ignoreConstraintName} ON {tblName} DISABLE;
 ";
 
-            updateString += $"UPDATE [dbo].[{tblName}] SET ";
+            updateString += $"UPDATE {DatabaseSchemas.QualifyTable(tblName)} SET ";
 
             int firstName = 0;
             int index = 0;
@@ -2297,23 +2263,24 @@ INDEX {ignoreConstraintName} ON {tblName} DISABLE";
         #region BATCH DELETE, UPDATE, INSERT
         //MUST BE DONE IN ORDER, DELETE, UPDATE, INSERT
 
-        private const string ConnectionString = @"Data Source=192.168.2.197,1445\ELYSIUM;User id=SA;Password=PoliceBox21;Initial Catalog=Elysium_DEV";
+        private readonly string _connectionString;
         private IDbConnection _connection;
 
         public IDbConnection Connection
         {
             get
             {
-                return _connection ??= new RebirthConnection(Logger, ConnectionString);
+                return _connection ??= new RebirthConnection(Logger, _connectionString);
             }
             
         }
 
-        public DataTables(ILogger logger)
+        public DataTables(ILogger logger, string connectionString = null)
         {
             Logger = logger;
             DataTableExtensions.Logger = logger;
-            _connection = new RebirthConnection(Logger, ConnectionString);
+            _connectionString = DatabaseConnection.Resolve(connectionString);
+            _connection = new RebirthConnection(Logger, _connectionString);
         }
         
         private void ProcessUpdates()
@@ -2600,7 +2567,7 @@ INDEX {ignoreConstraintName} ON {tblName} DISABLE";
             }
             catch (InvalidOperationException e)
             {
-                
+                Logger.LogException(e);
             }
         }
         
@@ -2722,8 +2689,6 @@ INDEX {ignoreConstraintName} ON {tblName} DISABLE";
                 //SetDefaultViewsSpawnedTables();
                 //SetDefaultViewsScriptableTables();
             });
-
-
             //LAST: PUSH ALL CHANGES TO SQL DATABASE
             //ProcessSqlUpdates(conString);
         }
@@ -2799,8 +2764,8 @@ INDEX {ignoreConstraintName} ON {tblName} DISABLE";
             _historyCharacterLootTableUpdate.Dispose();
             _historyCharacterLootTableInsert.Dispose();
             HistoryCharacterQuestsDataTable.Dispose();
-            HistoryCharacterQuestsTableUpdate.Dispose();
-            HistoryCharacterQuestsTableInsert.Dispose();
+            _historyCharacterQuestsTableUpdate.Dispose();
+            _historyCharacterQuestsTableInsert.Dispose();
             HistoryCurrencyTransactionsDataTable.Dispose();
             _historyCurrencyTransactionsTableUpdate.Dispose();
             _historyCurrencyTransactionsTableInsert.Dispose();

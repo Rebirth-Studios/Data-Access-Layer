@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CharacterCreationOptionsColumns : byte
+	internal enum CharacterCreationOptionsColumns : byte
 	{
 		styleId = 0,
 		styleName = 1,

@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum UnlockEffectsColumns : byte
+	internal enum UnlockEffectsColumns : byte
 	{
 		globalObject = 0,
 		unlockGlobalObject = 1,

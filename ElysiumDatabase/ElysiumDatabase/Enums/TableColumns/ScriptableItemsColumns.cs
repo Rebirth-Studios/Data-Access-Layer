@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableItemsColumns : byte
+	internal enum ScriptableItemsColumns : byte
 	{
 		scriptableItemId = 0,
 		globalObject = 1,
@@ -18,16 +18,5 @@ namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 		isSoulBound = 13,
 		itemDescription = 14,
 		craftingMaterialTypeId = 15,
-		globalObjectName = 16,
-		itemRarityBase = 17,
-		itemRarityMax = 18,
-		scriptableObjectTypeName = 19,
-		itemQualityBase = 20,
-		itemQualityMax = 21,
-		itemTypeName = 22,
-		craftingMaterialTypeName = 23,
-		itemRarityBaseId = 24,
-		itemRarityMaxId = 25,
-		itemSubTypeId = 26,
 	}
 }

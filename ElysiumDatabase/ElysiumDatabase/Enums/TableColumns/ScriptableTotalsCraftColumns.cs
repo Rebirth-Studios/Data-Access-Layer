@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableTotalsCraftColumns : byte
+	internal enum ScriptableTotalsCraftColumns : byte
 	{
 		craftTypeId = 0,
 		craftMainTypeId = 1,

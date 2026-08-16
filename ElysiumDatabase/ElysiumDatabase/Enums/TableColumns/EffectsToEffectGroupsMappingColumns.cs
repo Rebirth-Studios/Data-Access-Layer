@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum EffectsToEffectGroupsMappingColumns : byte
+	internal enum EffectsToEffectGroupsMappingColumns : byte
 	{
 		effectsToEffectGroupsMappingId = 0,
 		effectGlobalObject = 1,

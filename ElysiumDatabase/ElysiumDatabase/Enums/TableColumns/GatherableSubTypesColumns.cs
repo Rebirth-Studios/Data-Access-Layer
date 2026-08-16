@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum GatherableSubTypesColumns : byte
+	internal enum GatherableSubTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

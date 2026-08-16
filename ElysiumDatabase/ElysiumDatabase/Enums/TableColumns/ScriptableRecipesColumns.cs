@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableRecipesColumns : byte
+	internal enum ScriptableRecipesColumns : byte
 	{
 		id = 0,
 		globalObject = 1,

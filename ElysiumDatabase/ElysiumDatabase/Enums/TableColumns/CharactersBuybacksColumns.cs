@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CharactersBuybacksColumns : byte
+	internal enum CharactersBuybacksColumns : byte
 	{
 		instancedBuyBackId = 0,
 		instancedItemId = 1,

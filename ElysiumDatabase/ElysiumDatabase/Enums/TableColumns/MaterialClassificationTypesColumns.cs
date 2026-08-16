@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum MaterialClassificationTypesColumns : byte
+	internal enum MaterialClassificationTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

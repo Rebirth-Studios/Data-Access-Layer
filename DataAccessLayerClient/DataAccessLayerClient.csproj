@@ -4,13 +4,12 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>false</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ElysiumDataAccessLayer.Models\ElysiumDataAccessLayer.Models.csproj" />
-      <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabase\ElysiumDatabase.csproj" />
     </ItemGroup>
 
 </Project>

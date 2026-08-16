@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum EnemyHumanoidTypesColumns : byte
+	internal enum EnemyHumanoidTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

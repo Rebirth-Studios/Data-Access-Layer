@@ -52,7 +52,7 @@ internal class ServerClassReader
         int      timesStuck     = 0;
         var      stuckLastIndex = 0;
         string   header         = "";
-        string[] parameters     = null;
+        string[]? parameters     = null;
         for (int i = 0; i < lines.Length; i++)
         {
             var line = lines[i];
@@ -156,7 +156,7 @@ internal class ServerClassReader
                 //Console.WriteLine(lines[lastLineIndex-1]);
                 startLine     = -1;
                 lastLineIndex = -1;
-                methods.Add(data);
+                methods.Add(data!);
             }
 
 
@@ -172,7 +172,7 @@ internal class ServerClassReader
         //Console.WriteLine($"WriteMethod: {methodName}");
         //File.ReadAllLines()
         var        parameterString = string.Join(", ", parameters);
-        MethodInfo foundMethod = null;
+        MethodInfo? foundMethod = null;
         foreach (var method in typeof(DataTableStoredProcs).GetMethods(BindingFlags.Public | BindingFlags.Static))
         {
             if (method.Name == methodName)

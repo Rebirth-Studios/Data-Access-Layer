@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum GlobalObjectsColumns : byte
+	internal enum GlobalObjectsColumns : byte
 	{
 		globalObjectCode = 0,
 		globalObject = 1,

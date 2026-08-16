@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ElysiumEnums")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfcbfebb0c43cdbefa7681bc02b1a1bbd08bcbb6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09aca977a178ba4fc419a2901b1bb3764e103a50")]
 [assembly: System.Reflection.AssemblyProductAttribute("ElysiumEnums")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ElysiumEnums")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

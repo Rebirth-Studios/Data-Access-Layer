@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RebirthStudios.DataAccessLayer.EntityFramework;
+using RebirthStudios.DataAccessLayer.EntityFramework.Entities;
 using RebirthStudios.Logging;
 
 namespace RebirthStudios.DataAccessLayer.EntityFramework

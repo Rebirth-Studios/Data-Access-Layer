@@ -7035,8 +7035,8 @@ namespace RebirthStudios.DataAccessLayer
                 var craftedSubTypeId = (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftSubTypeId];
                 var rarityId = (RarityTypes) (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftRarityId];
                 var itemId = (ushort) (int) sI[(byte)ScriptableItemsColumns.scriptableItemId];
-                CraftTotalModel craftTotalData = new CraftTotalModel(totalId, craftedTypeId, craftedMainTypeId, 
-                    craftedClassificationTypeId, craftedSubTypeId, rarityId, itemId);
+                CraftTotalModel craftTotalData = new CraftTotalModel(totalId, (byte)craftedTypeId, craftedMainTypeId, 
+                    craftedClassificationTypeId, craftedSubTypeId, (byte)rarityId, itemId);
                 craftTotals.Add(craftTotalData);
             }
 #if UNITY_EDITOR   

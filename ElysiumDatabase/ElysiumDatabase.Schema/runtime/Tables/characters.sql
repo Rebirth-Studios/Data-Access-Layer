@@ -26,7 +26,7 @@ CREATE TABLE [runtime].[characters] (
     [spawnCoordinateZ]     DECIMAL (18, 2)  NOT NULL,
     CONSTRAINT [characters_primaryKey] PRIMARY KEY CLUSTERED ([characterId] ASC),
     CONSTRAINT [characters_globalTiers_globalTierId_fk] FOREIGN KEY ([characterTierId]) REFERENCES [content].[globalTiers] ([typeId]),
-    CONSTRAINT [characters_playersAccounts_playerAccountId_fk] FOREIGN KEY ([playerAccountId]) REFERENCES [identity].[playersAccounts] ([playerAccountId]),
+    CONSTRAINT [characters_playersAccounts_playerAccountId_fk] FOREIGN KEY ([playerAccountId]) REFERENCES [iam].[playersAccounts] ([playerAccountId]),
     CONSTRAINT [characters_spawnedWorldObjects_spawnedWorldObjectId_fk] FOREIGN KEY ([spawnedWorldObjectId]) REFERENCES [runtime].[spawnedWorldObjects] ([spawnedWorldObjectId])
 );
 

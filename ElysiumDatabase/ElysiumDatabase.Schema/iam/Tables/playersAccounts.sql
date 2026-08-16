@@ -1,4 +1,4 @@
-CREATE TABLE [identity].[playersAccounts] (
+CREATE TABLE [iam].[playersAccounts] (
     [playerAccountId]      INT           IDENTITY (1, 1) NOT NULL,
     [steamId]              VARCHAR (64)  NOT NULL,
     [steamName]            VARCHAR (255) NOT NULL,

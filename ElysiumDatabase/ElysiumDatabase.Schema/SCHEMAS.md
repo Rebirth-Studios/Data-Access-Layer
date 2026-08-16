@@ -2,15 +2,15 @@
 
 The table model is divided by lifecycle and ownership rather than by feature name alone.
 
-| Schema | Tables | Purpose | Current assignment rule |
-| --- | ---: | --- | --- |
+| Schema    | Tables | Purpose | Current assignment rule |
+|-----------| ---: | --- | --- |
 | `content` | 352 | Relatively static game definitions, lookup data, and scriptable content | All tables not assigned to another domain |
 | `runtime` | 44 | Mutable live game and player state | `characters*`, `instanced*`, `spawned*`, `spawner*`, and `questsGenerated` |
 | `history` | 9 | Append-oriented audit and gameplay history | `history*`, except the operational `historyBatchProcessing` table |
-| `identity` | 1 | Account and external identity data | `playersAccounts` |
-| `ops` | 46 | Import, staging, diagnostics, maintenance, and internal tables | Leading `_` names plus `ab`, `DB_Errors`, `historyBatchProcessing`, `Internal_FK_Definition_Storage`, `lastUpdatedTables`, `Table_1`, and `test` |
-| `api` | 0 | Future stable application-facing procedures and views | Created now; intentionally empty during the compatibility phase |
-| `dbo` | 0 tables | Shared functions, views, procedures, and temporary compatibility surface | Modules remain here until callers and permissions are inventoried |
+| `iam`     | 1 | Account and external identity data | `playersAccounts` |
+| `ops`     | 46 | Import, staging, diagnostics, maintenance, and internal tables | Leading `_` names plus `ab`, `DB_Errors`, `historyBatchProcessing`, `Internal_FK_Definition_Storage`, `lastUpdatedTables`, `Table_1`, and `test` |
+| `api`     | 0 | Future stable application-facing procedures and views | Created now; intentionally empty during the compatibility phase |
+| `dbo`     | 0 tables | Shared functions, views, procedures, and temporary compatibility surface | Modules remain here until callers and permissions are inventoried |
 
 The physical folders under each schema are the table inventory and source of truth. The same assignment rules are implemented in `ElysiumDatabase/Configuration/DatabaseSchemas.cs` so legacy DataTable calls can qualify a table name without changing every caller at once.
 

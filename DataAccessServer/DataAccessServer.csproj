@@ -13,5 +13,8 @@
     <ItemGroup>
       <ProjectReference Include="..\ElysiumDatabase\ElysiumDatabase\ElysiumDatabase.csproj" />
     </ItemGroup>
-
+    
+    <ItemGroup Condition="Exists('..\..\Elysium.Database\Elysium.Schema.sqlproj')">
+        <ProjectReference Include="..\..\Elysium.Database\Elysium.Database.sqlproj" />
+    </ItemGroup>
 </Project>

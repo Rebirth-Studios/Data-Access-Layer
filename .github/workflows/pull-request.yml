@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build-and-test:
-    name: Build and test
+    name: Build DataAccessServer
     runs-on: windows-latest
     timeout-minutes: 20
 
@@ -21,6 +21,7 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      PROJECT: DataAccessServer/DataAccessServer.csproj
 
     steps:
       - name: Check out repository
@@ -34,11 +35,14 @@ jobs:
       - name: Restore local tools
         run: dotnet tool restore
 
-      - name: Restore projects
-        run: dotnet restore SocketServer.sln
+      - name: Restore DataAccessServer
+        run: dotnet restore "${{ env.PROJECT }}"
 
-      - name: Build projects
-        run: dotnet build SocketServer.sln --configuration Release --no-restore
+      - name: Build DataAccessServer
+        run: >
+          dotnet build "${{ env.PROJECT }}"
+          --configuration Release
+          --no-restore
 
       - name: Run tests when present
         shell: pwsh
@@ -61,7 +65,10 @@ jobs:
           foreach ($testProject in $testProjects) {
             $relativePath = Resolve-Path -LiteralPath $testProject.FullName -Relative
             Write-Host "Testing $relativePath"
-            dotnet test $testProject.FullName --configuration Release --logger "console;verbosity=normal"
+
+            dotnet test $testProject.FullName `
+              --configuration Release `
+              --logger "console;verbosity=normal"
 
             if ($LASTEXITCODE -ne 0) {
               exit $LASTEXITCODE

@@ -1,0 +1,13 @@
+<Solution>
+  <Project Path="../Elysium.Database/Elysium.Database.sqlproj" Type="42ea0dbd-9cf1-443e-919e-be9c484e4577" />
+  <Project Path="CopyBuildsToUnity/CopyBuildsToUnity.csproj" />
+  <Project Path="DataAccessLayerClient/DataAccessLayerClient.csproj" />
+  <Project Path="DataAccessServer/DataAccessServer.csproj" />
+  <Project Path="ElysiumDataAccessLayer.Models/ElysiumDataAccessLayer.Models.csproj" />
+  <Project Path="ElysiumDatabase.EntityFramework/ElysiumDatabase.EntityFramework.csproj" />
+  <Project Path="ElysiumDatabase/ElysiumDatabase/ElysiumDatabase.csproj" />
+  <Project Path="ElysiumDatabase/ElysiumEnums/ElysiumEnums.csproj" />
+  <Project Path="EnumLoader/EnumLoader.csproj" />
+  <Project Path="ImportGoogleSheets/ImportGoogleSheets.csproj" />
+  <Project Path="SocketServer/SocketServer.csproj" />
+</Solution>

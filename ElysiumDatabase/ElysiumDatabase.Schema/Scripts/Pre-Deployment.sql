@@ -1,0 +1,2 @@
+-- Runs before the declarative deployment plan.
+-- Keep this script limited to operations that cannot be represented in the database model.

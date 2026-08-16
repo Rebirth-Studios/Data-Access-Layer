@@ -1,0 +1,2 @@
+-- Runs after the declarative deployment plan.
+-- Reference-data scripts added here must be idempotent because this runs on every deployment.

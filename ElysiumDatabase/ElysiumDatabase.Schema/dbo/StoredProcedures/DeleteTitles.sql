@@ -1,0 +1,12 @@
+CREATE PROCEDURE [dbo].[DeleteTitles]
+
+AS 
+BEGIN
+   SET NOCOUNT ON 
+
+   DELETE FROM titles
+
+END
+
+GO
+

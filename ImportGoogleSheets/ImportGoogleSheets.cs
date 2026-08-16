@@ -6,13 +6,15 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
+using RebirthStudios.DataAccessLayer.Configuration;
 
 
 namespace RebirthStudios.Editor
 {
     public class ImportGoogleSheets
     {
-        private static string conString = @"Data Source=localhost\ELYSIUM;User id=Elysium;Password=PoliceBox21;Initial Catalog=Elysium_DEV";
+        private static string conString = Environment.GetEnvironmentVariable("ELYSIUM_DB_CONNECTION")
+            ?? throw new InvalidOperationException("ELYSIUM_DB_CONNECTION is required.");
 
         private string buttonName = "Process All Sheets";
         private bool modeProcessAll = true;
@@ -1202,11 +1204,17 @@ namespace RebirthStudios.Editor
             } 
                 
             //if(_sqlConnection.State == ConnectionState.Closed) _sqlConnection.Open();
-            string    query      = "select * from sysobjects where type='U' and name ='" + tableName + "'";
+            const string query = @"SELECT 1
+FROM sys.tables AS t
+INNER JOIN sys.schemas AS s ON s.schema_id = t.schema_id
+WHERE s.name = @schemaName AND t.name = @tableName";
             //Open Connection
             
             using (var cmd = new SqlCommand(query, _sqlConnection))
             {
+                cmd.Parameters.Add("@schemaName", SqlDbType.NVarChar, 128).Value =
+                    DatabaseSchemas.GetTableSchema(tableName);
+                cmd.Parameters.Add("@tableName", SqlDbType.NVarChar, 128).Value = tableName;
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -1436,7 +1444,7 @@ namespace RebirthStudios.Editor
             {
                 DeleteQuery = DeleteQuery + Environment.NewLine;
                 //DeleteQuery = DeleteQuery + "   TRUNCATE TABLE " + tableName + System.Environment.NewLine + System.Environment.NewLine;
-                DeleteQuery = DeleteQuery + "   DELETE FROM " + tableName + Environment.NewLine + Environment.NewLine;
+                DeleteQuery = DeleteQuery + "   DELETE FROM " + DatabaseSchemas.QualifyTable(tableName) + Environment.NewLine + Environment.NewLine;
                 DeleteQuery = DeleteQuery + "END" + Environment.NewLine;
             }
             // catch (Exception e)
@@ -1455,7 +1463,7 @@ namespace RebirthStudios.Editor
             {
                 SaveQuery = "CREATE PROCEDURE [dbo].[" + StoredProcName + "]" + Environment.NewLine + "   " + parameterTable + " " + tmpTableName + Environment.NewLine + "AS " + Environment.NewLine + "BEGIN" + Environment.NewLine + "   SET NOCOUNT ON " + Environment.NewLine;
                 SaveQuery = SaveQuery + Environment.NewLine;
-                SaveQuery = SaveQuery + "   INSERT INTO dbo." + tableName + "(";
+                SaveQuery = SaveQuery + "   INSERT INTO " + DatabaseSchemas.QualifyTable(tableName) + "(";
                 //INSERT MATCHING COLUMNS HERE
                 foreach (string sqlColName in sqlColumnMatches)
                 {
@@ -1492,7 +1500,7 @@ namespace RebirthStudios.Editor
                             parameterTable + " " + tmpTableName + Environment.NewLine + "AS " + Environment.NewLine +
                             "BEGIN" + Environment.NewLine + "   SET NOCOUNT ON " + Environment.NewLine;
                 SaveQuery = SaveQuery + Environment.NewLine;
-                SaveQuery = SaveQuery + "   INSERT INTO dbo." + tableName + "(";
+                SaveQuery = SaveQuery + "   INSERT INTO " + DatabaseSchemas.QualifyTable(tableName) + "(";
                 //INSERT MATCHING COLUMNS HERE
                 foreach (string sqlColName in sqlColumnMatches)
                 {
@@ -1712,7 +1720,10 @@ namespace RebirthStudios.Editor
             List<string> sqlColumns = new List<string>();
         
             //Query
-            string query = "SELECT COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tblName + "'";
+            const string query = @"SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName
+ORDER BY ORDINAL_POSITION";
 
             if (_sqlConnection.State == ConnectionState.Closed)
             {
@@ -1723,6 +1734,9 @@ namespace RebirthStudios.Editor
             //Open Connection
             using (var cmd = new SqlCommand(query, _sqlConnection))
             {
+                cmd.Parameters.Add("@tableSchema", SqlDbType.NVarChar, 128).Value =
+                    DatabaseSchemas.GetTableSchema(tblName);
+                cmd.Parameters.Add("@tableName", SqlDbType.NVarChar, 128).Value = tblName;
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -1929,7 +1943,7 @@ namespace RebirthStudios.Editor
 
 
             sqlQuery = sqlQuery.Remove(sqlQuery.Length - 1);
-            sqlQuery = sqlQuery + " FROM " + tableName;
+            sqlQuery = sqlQuery + " FROM " + DatabaseSchemas.QualifyTable(tableName);
 
             return sqlQuery;
         }
@@ -1960,7 +1974,7 @@ namespace RebirthStudios.Editor
 
             string CountQuery = "CREATE PROCEDURE [dbo].[" + CountStoredProc + "]  @RecordCount INT OUTPUT" + Environment.NewLine + Environment.NewLine + "AS " + Environment.NewLine + "BEGIN" + Environment.NewLine + "   SET NOCOUNT ON " + Environment.NewLine;
             CountQuery = CountQuery + Environment.NewLine;
-            CountQuery = CountQuery + "   SELECT @RecordCount = COUNT(*) FROM " + tableName + Environment.NewLine + Environment.NewLine;
+            CountQuery = CountQuery + "   SELECT @RecordCount = COUNT(*) FROM " + DatabaseSchemas.QualifyTable(tableName) + Environment.NewLine + Environment.NewLine;
             CountQuery = CountQuery + "END" + Environment.NewLine;
             return CountQuery;
         }

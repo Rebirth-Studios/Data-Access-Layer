@@ -37,6 +37,21 @@ namespace RebirthStudios.Enums
 		[RebirthName("Recipe")]
 		[RebirthDescription("Requires a recipe to be unlocked")]
 		Recipe = 10,
-		MAX_VALUE = 11,
+		[RebirthName("Achievement")]
+		[RebirthDescription("Requires an achievement to be aquired")]
+		Achievement = 11,
+		[RebirthName("Item")]
+		[RebirthDescription("Requires items to be aquired")]
+		Item = 12,
+		[RebirthName("Milestone")]
+		[RebirthDescription("Requires a milestone to be achieved")]
+		Milestone = 13,
+		[RebirthName("Quest")]
+		[RebirthDescription("Requires a quest to be completed")]
+		Quest = 14,
+		[RebirthName("Title")]
+		[RebirthDescription("Requires a title to be aquired")]
+		Title = 15,
+		MAX_VALUE = 16,
 	}
 }

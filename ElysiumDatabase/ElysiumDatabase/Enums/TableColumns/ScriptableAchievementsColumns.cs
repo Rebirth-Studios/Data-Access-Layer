@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableAchievementsColumns : byte
+	internal enum ScriptableAchievementsColumns : byte
 	{
 		achievementId = 0,
 		globalObject = 1,

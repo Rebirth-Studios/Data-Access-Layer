@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\ElysiumDataAccessLayer.Models\ElysiumDataAccessLayer.Models.csproj" />
+      <ProjectReference Include="..\..\ElysiumDatabase.EntityFramework\ElysiumDatabase.EntityFramework.csproj" />
     </ItemGroup>
 
     <ItemGroup>

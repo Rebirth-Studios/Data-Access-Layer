@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum GeneralItemClassificationTypesColumns : byte
+	internal enum GeneralItemClassificationTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

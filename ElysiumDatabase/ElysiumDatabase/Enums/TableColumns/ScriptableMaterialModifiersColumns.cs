@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableMaterialModifiersColumns : byte
+	internal enum ScriptableMaterialModifiersColumns : byte
 	{
 		scriptableMaterialModifierId = 0,
 		globalObject = 1,

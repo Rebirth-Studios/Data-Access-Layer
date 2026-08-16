@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableJewelryColumns : byte
+	internal enum ScriptableJewelryColumns : byte
 	{
 		jewelrySlotTypeId = 0,
 		jewelryClassificationTypeId = 1,

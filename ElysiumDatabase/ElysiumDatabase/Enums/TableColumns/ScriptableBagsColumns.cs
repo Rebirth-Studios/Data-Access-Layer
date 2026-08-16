@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableBagsColumns : byte
+	internal enum ScriptableBagsColumns : byte
 	{
 		globalObject = 0,
 		bagMainTypeId = 1,

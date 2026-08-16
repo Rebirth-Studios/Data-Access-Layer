@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7ZxFL3z51fBVjqzJ1VYM3mD/JUvFzBRWNKXmU1IqQzdlEK3uWspfv6jsOhv/tzJ5/5qXvgK13ye6rMYuFlkYsA==",
+  "dgSpecHash": "RB9TA3TU5eY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\logan\\RiderProjects\\ElysiumEnums\\ElysiumEnums\\ElysiumEnums.csproj",
+  "projectFilePath": "C:\\Users\\logan\\RiderProjects\\Data-Access-Layer2\\ElysiumEnums\\ElysiumEnums\\ElysiumEnums.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

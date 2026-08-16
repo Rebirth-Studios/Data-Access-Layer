@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum LootTableClassificationTypesColumns : byte
+	internal enum LootTableClassificationTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

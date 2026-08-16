@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum InstancedBagsColumns : byte
+	internal enum InstancedBagsColumns : byte
 	{
 		slots = 0,
 		lastUpdate = 1,

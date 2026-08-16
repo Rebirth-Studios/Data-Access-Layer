@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using RebirthStudios.DataAccessLayer.Enums.TableColumns;
+using RebirthStudios.Logging;
 
-    namespace RebirthStudios.DataAccessLayer
+namespace RebirthStudios.DataAccessLayer
 {
     public class DataTableSelects
     {
@@ -259,7 +260,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public DataRow? CharactersQuestsSelectRow(int characterId, string questGlobalObjectCode)     
+        public DataRow CharactersQuestsSelectRow(int characterId, string questGlobalObjectCode)     
         {
             foreach (var item in _dataTables.CharactersQuestsDataTable.Select($"{CharactersQuestsColumns.characterId}={characterId} AND {CharactersQuestsColumns.questGlobalObject}='{questGlobalObjectCode}'", "", DataViewRowState.CurrentRows))
             {
@@ -267,7 +268,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return null;
         }
-        public List<DataRow> CharactersQuestsSelectRows(int characterId, string? questGlobalObjectCode = null)     
+        public List<DataRow> CharactersQuestsSelectRows(int characterId, string questGlobalObjectCode = null)     
         {
             List<DataRow> rows = new List<DataRow>();
             if (questGlobalObjectCode == null)
@@ -288,7 +289,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             
             return rows;
         }
-        public List<DataRow> CharactersQuestsObjectivesSelectRows(int? characterId, string? questGlobalObjectCode = null, string? objectiveGlobalObjectCode = null)
+        public List<DataRow> CharactersQuestsObjectivesSelectRows(int? characterId, string questGlobalObjectCode = null, string objectiveGlobalObjectCode = null)
         {
             List<DataRow> rows = new List<DataRow>();
             if (string.IsNullOrEmpty(questGlobalObjectCode))
@@ -498,9 +499,9 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
         public List<DataRow> GlobalObjectTypesSelectRows()
         {
             List<DataRow> rows = new List<DataRow>();
-            foreach (var gOT in _dataTables.GlobalObjectTypesDataTable.Select("", "", DataViewRowState.CurrentRows))
+            foreach (var gOt in _dataTables.GlobalObjectTypesDataTable.Select("", "", DataViewRowState.CurrentRows))
             {
-                rows.Add(gOT);
+                rows.Add(gOt);
             }
             return rows;
 
@@ -529,17 +530,17 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             List<DataRow> rows = new List<DataRow>();
             if (itemSubTypeId == null)
             {
-                foreach (var iST in _dataTables.ItemSubTypesDataTable.Select($"", "", DataViewRowState.CurrentRows))
+                foreach (var iSt in _dataTables.ItemSubTypesDataTable.Select($"", "", DataViewRowState.CurrentRows))
                 {
-                    rows.Add(iST);
+                    rows.Add(iSt);
                 }
 
             }
             else
             {
-                foreach (var iST in _dataTables.ItemSubTypesDataTable.Select($"{ItemSubTypesColumns.typeId}='{itemSubTypeId.Value}'", "", DataViewRowState.CurrentRows))
+                foreach (var iSt in _dataTables.ItemSubTypesDataTable.Select($"{ItemSubTypesColumns.typeId}='{itemSubTypeId.Value}'", "", DataViewRowState.CurrentRows))
                 {
-                    rows.Add(iST);
+                    rows.Add(iSt);
                 }
             }
             return rows;
@@ -1268,9 +1269,9 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
         public List<DataRow> EffectGroupsToItemsMappingSelectRows()
         {
             List<DataRow> rows = new List<DataRow>();
-            foreach (var eGTIM in _dataTables.EffectGroupsToItemsMappingDataTable.Select("", "", DataViewRowState.CurrentRows))
+            foreach (var eGtim in _dataTables.EffectGroupsToItemsMappingDataTable.Select("", "", DataViewRowState.CurrentRows))
             {
-                rows.Add(eGTIM);
+                rows.Add(eGtim);
             }
             return rows;
         }
@@ -1325,7 +1326,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public Dictionary<string, DataRow> GlobalObjectsSelectRows_Dictionary(string globalObjectCode = default)
+        public Dictionary<string, DataRow> GlobalObjectsSelectRows_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -1553,7 +1554,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public Dictionary<string, DataRow> ScriptableAbilitiesSelectRows_Dictionary(string? globalObjectCode = null)
+        public Dictionary<string, DataRow> ScriptableAbilitiesSelectRows_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -1630,7 +1631,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public Dictionary<string, DataRow> ScriptableAnimalsSelectRows_Dictionary(string? globalObjectCode = null)
+        public Dictionary<string, DataRow> ScriptableAnimalsSelectRows_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -1936,7 +1937,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public Dictionary<string, DataRow> ScriptableItemsSelectRows_Dictionary(string? globalObjectCode = null)
+        public Dictionary<string, DataRow> ScriptableItemsSelectRows_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -2117,7 +2118,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public Dictionary<string, DataRow> ScriptableRecipesSelectRows_ByProductGlobalObjectCode_Dictionary(string? globalObjectCode = null)
+        public Dictionary<string, DataRow> ScriptableRecipesSelectRows_ByProductGlobalObjectCode_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -2137,7 +2138,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             return rows;
         }
 
-        public Dictionary<string, DataRow> ScriptableRecipesSelectRows_ByGlobalObjectCode_Dictionary(string? globalObjectCode = null)
+        public Dictionary<string, DataRow> ScriptableRecipesSelectRows_ByGlobalObjectCode_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -2223,7 +2224,7 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
             }
             return rows;
         }
-        public Dictionary<string, DataRow> ScriptableSkillsSelectRows_Dictionary(string? globalObjectCode = null)
+        public Dictionary<string, DataRow> ScriptableSkillsSelectRows_Dictionary(string globalObjectCode = null)
         {
             Dictionary<string, DataRow> rows = new Dictionary<string, DataRow>();
             if (string.IsNullOrEmpty(globalObjectCode))
@@ -2847,45 +2848,45 @@ using RebirthStudios.DataAccessLayer.Enums.TableColumns;
 
         public DataRow AddSpawnedWorldObjectsBag(Guid spawnedWorldObjectId, byte bagLocationId)
         {
-            DataRow sWOB = _dataTables.SpawnedWorldObjectsBagsDataTable.NewRow();
+            DataRow sWob = _dataTables.SpawnedWorldObjectsBagsDataTable.NewRow() ?? throw new ArgumentNullException("_dataTables.SpawnedWorldObjectsBagsDataTable.NewRow()");
             
-            sWOB[(byte)SpawnedWorldObjectsBagsColumns.spawnedWorldObjectId] = spawnedWorldObjectId;
-            sWOB[(byte)SpawnedWorldObjectsBagsColumns.bagLocationId]        = bagLocationId;
-            sWOB[(byte)SpawnedWorldObjectsBagsColumns.instancedItemId]      = DBNull.Value;
-            sWOB[(byte)SpawnedWorldObjectsBagsColumns.lastUpdate]           = DateTime.Now;
+            sWob[(byte)SpawnedWorldObjectsBagsColumns.spawnedWorldObjectId] = spawnedWorldObjectId;
+            sWob[(byte)SpawnedWorldObjectsBagsColumns.bagLocationId]        = bagLocationId;
+            sWob[(byte)SpawnedWorldObjectsBagsColumns.instancedItemId]      = DBNull.Value;
+            sWob[(byte)SpawnedWorldObjectsBagsColumns.lastUpdate]           = DateTime.Now;
             
-            _dataTables.SpawnedWorldObjectsBagsDataTable.Rows.Add(sWOB);
-            _dataTables.SpawnedWorldObjectsBagsDictionaryByCharacterBagId.Add((int)sWOB[(byte)SpawnedWorldObjectsBagsColumns.characterBagId], sWOB);
+            _dataTables.SpawnedWorldObjectsBagsDataTable.Rows.Add(sWob);
+            _dataTables.SpawnedWorldObjectsBagsDictionaryByCharacterBagId.Add((int)sWob[(byte)SpawnedWorldObjectsBagsColumns.characterBagId], sWob);
 
-            return sWOB;
+            return sWob;
         }
         public DataRow UpdateSpawnedWorldObjectsBag(in Guid spawnedWorldObjectId, byte bagLocationId, in Guid instancedItemId)
         {
             if(instancedItemId == default) throw new Exception("UpdateSpawnedWorldObjectsBag: InstancedItemId cannot be default");
-            foreach (var sWOI in _dataTables.SpawnedWorldObjectsBagsDataTable.Select($"{SpawnedWorldObjectsBagsColumns.spawnedWorldObjectId}='{spawnedWorldObjectId}' AND {SpawnedWorldObjectsBagsColumns.bagLocationId} = {bagLocationId}"))
+            foreach (var sWoi in _dataTables.SpawnedWorldObjectsBagsDataTable.Select($"{SpawnedWorldObjectsBagsColumns.spawnedWorldObjectId}='{spawnedWorldObjectId}' AND {SpawnedWorldObjectsBagsColumns.bagLocationId} = {bagLocationId}"))
             {
-                sWOI[(byte)SpawnedWorldObjectsBagsColumns.instancedItemId] = instancedItemId;
-                sWOI[(byte)SpawnedWorldObjectsBagsColumns.lastUpdate] = DateTime.Now;
-                return sWOI;
+                sWoi[(byte)SpawnedWorldObjectsBagsColumns.instancedItemId] = instancedItemId;
+                sWoi[(byte)SpawnedWorldObjectsBagsColumns.lastUpdate] = DateTime.Now;
+                return sWoi;
             }
             throw new Exception("Failed to Update Bag Slot, Bag Slot not found");
         }
         public DataRow ResetSpawnedWorldObjectsBag(in Guid spawnedWorldObjectId, byte bagLocationId)
         {
-            foreach (var sWOB in _dataTables.SpawnedWorldObjectsBagsDataTable.Select($"{SpawnedWorldObjectsBagsColumns.spawnedWorldObjectId}='{spawnedWorldObjectId}' AND {SpawnedWorldObjectsBagsColumns.bagLocationId} = {bagLocationId}"))
+            foreach (var sWob in _dataTables.SpawnedWorldObjectsBagsDataTable.Select($"{SpawnedWorldObjectsBagsColumns.spawnedWorldObjectId}='{spawnedWorldObjectId}' AND {SpawnedWorldObjectsBagsColumns.bagLocationId} = {bagLocationId}"))
             {
-                var characterBagId = (int)sWOB[(byte)SpawnedWorldObjectsBagsColumns.characterBagId];
-                sWOB[(byte)SpawnedWorldObjectsBagsColumns.instancedItemId] = DBNull.Value;
-                sWOB[(byte)SpawnedWorldObjectsBagsColumns.lastUpdate] = DateTime.Now;
-                foreach (var sWOI in _dataTables.SpawnedWorldObjectsInventoryDataTable.Select($"{SpawnedWorldObjectsInventoryColumns.characterBagId}={characterBagId}"))
+                var characterBagId = (int)sWob[(byte)SpawnedWorldObjectsBagsColumns.characterBagId];
+                sWob[(byte)SpawnedWorldObjectsBagsColumns.instancedItemId] = DBNull.Value;
+                sWob[(byte)SpawnedWorldObjectsBagsColumns.lastUpdate] = DateTime.Now;
+                foreach (var sWoi in _dataTables.SpawnedWorldObjectsInventoryDataTable.Select($"{SpawnedWorldObjectsInventoryColumns.characterBagId}={characterBagId}"))
                 {
-                    sWOI.Delete();
+                    sWoi.Delete();
                 }
-                return sWOB;
+                return sWob;
             }
             throw new Exception("Failed to Reset Spawned World Object Bag, Bag Slot not found");
         }
-        public DataRow? RemoveSpawnedWorldObjectsBag_ByInstancedItemId(in Guid instancedItemId)
+        public DataRow RemoveSpawnedWorldObjectsBag_ByInstancedItemId(in Guid instancedItemId)
         {
             foreach (var sWOB in _dataTables.SpawnedWorldObjectsBagsDataTable.Select($"{SpawnedWorldObjectsBagsColumns.instancedItemId}='{instancedItemId}'"))
             {

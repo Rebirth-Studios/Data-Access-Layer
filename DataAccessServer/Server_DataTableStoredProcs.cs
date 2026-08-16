@@ -9,6 +9,7 @@
     using RebirthStudios.DataAccessLayer.Models;
     using RebirthStudios.Enums;
     using RebirthStudios.Enums.Items;
+    using RebirthStudios.Logging;
 
     public class Server_DataTableStoredProcs
         {

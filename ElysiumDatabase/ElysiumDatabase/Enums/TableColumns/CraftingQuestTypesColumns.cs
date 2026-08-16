@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CraftingQuestTypesColumns : byte
+	internal enum CraftingQuestTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
+using System.Reflection;
 
 public class Program
 {
@@ -11,7 +12,15 @@ public class Program
         ClientClassBuilder.BuildRPCMethod();
         
         var p = new Process();
-        p.StartInfo = new ProcessStartInfo(@"E:\Users\logan\RiderProjects\SocketServer\CopyBuildsToUnity\bin\Release\net7.0\CopyBuildsToUnity.exe");
+        var filePath = Assembly.GetEntryAssembly()!.Location;
+        // Get the directory of the executable
+        string currentDirectory = Path.GetDirectoryName(filePath)!;
+
+        // Move up two levels
+        string parentDirectory = Directory.GetParent(currentDirectory)!.Parent!.Parent!.Parent!.FullName;
+
+
+        p.StartInfo = new ProcessStartInfo(@$"{parentDirectory}\CopyBuildsToUnity\bin\Release\net7.0\CopyBuildsToUnity.exe");
         p.StartInfo.ArgumentList.Add("Test");
         p.Start();
         

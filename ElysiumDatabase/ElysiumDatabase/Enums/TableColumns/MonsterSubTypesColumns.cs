@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum MonsterSubTypesColumns : byte
+	internal enum MonsterSubTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

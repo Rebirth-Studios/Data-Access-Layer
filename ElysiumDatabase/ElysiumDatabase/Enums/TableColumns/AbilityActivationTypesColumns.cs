@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum AbilityActivationTypesColumns : byte
+	internal enum AbilityActivationTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

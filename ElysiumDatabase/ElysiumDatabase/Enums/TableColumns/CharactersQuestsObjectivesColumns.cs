@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CharactersQuestsObjectivesColumns : byte
+	internal enum CharactersQuestsObjectivesColumns : byte
 	{
 		charactersQuestObjectivesId = 0,
 		questGlobalObject = 1,

@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ItemSubTypesColumns : byte
+	internal enum ItemSubTypesColumns : byte
 	{
 		typeId = 0,
 		type = 1,

@@ -66,7 +66,7 @@ namespace RebirthStudios.Enums
     public sealed class RebirthChildEnumAttribute : Attribute
     {
         private Type type;
-        public RebirthChildEnumAttribute() : this(default)
+        public RebirthChildEnumAttribute() : this(null!)
         {
         }
 

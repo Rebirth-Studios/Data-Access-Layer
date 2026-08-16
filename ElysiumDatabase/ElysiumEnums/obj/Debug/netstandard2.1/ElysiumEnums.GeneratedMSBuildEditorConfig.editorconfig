@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = ElysiumEnums
-build_property.ProjectDir = C:\Users\Loganphx\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\
+build_property.ProjectDir = C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -6,33 +6,33 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using ElysiumDataAccessLayer.Models.DataTypes;
 using RebirthStudios.DataAccessLayer.Enums;
 using RebirthStudios.DataAccessLayer.Enums.TableColumns;
+using RebirthStudios.DataAccessLayer.Configuration;
+using RebirthStudios.DataAccessLayer.EntityFramework;
 using RebirthStudios.DataAccessLayer.Models;
 using RebirthStudios.Enums;
 using RebirthStudios.Enums.Items;
 using RebirthStudios.Enums.Stats;
 using RebirthStudios.Enums.WorldObjects;
+using RebirthStudios.Logging;
 using RebirthStudios.RebirthStudios.Core.Enums.TableColumns;
 // ReSharper disable InconsistentNaming
 
 // ReSharper disable once CheckNamespace
 namespace RebirthStudios.DataAccessLayer
 {
-    public class PlayerAccountRequestResponse
-    {
-        public bool    success;
-        public string? errorMessage;
-        public bool?   admin;
-        public int?    accountId;
-    }
+  
     public class DataTableStoredProcs :   IDisposable
     {
-        private static ILogger?              Logger { get; set; }
-        private static DataTableStoredProcs? Instance;
+        private static ILogger              Logger { get; set; }
+        private static DataTableStoredProcs Instance;
 
         public readonly          DataTables       _dataTables;
         private         readonly DataTableSelects _dataTableSelects;
+        public                  PlayerAccountStore PlayerAccounts { get; }
 
         private static bool SQL_PROFILING_ENABLED;
         private static byte CopperValue;
@@ -47,13 +47,18 @@ namespace RebirthStudios.DataAccessLayer
             byte maxBags,
             byte maxPlayerBuybacks, 
             byte maxCharacters,
-            bool sqlProfiling)
+            bool sqlProfiling,
+            string connectionString = null)
         {
             Instance          = this;
             Logger            = logger;
 
-            _dataTables       = new DataTables(logger);
+            var resolvedConnectionString = DatabaseConnection.Resolve(connectionString);
+            _dataTables       = new DataTables(logger, resolvedConnectionString);
             _dataTableSelects = new DataTableSelects(_dataTables, logger);
+            PlayerAccounts    = new PlayerAccountStore(
+                ElysiumDbContextFactory.Create(resolvedConnectionString),
+                logger);
             
             CopperValue       = copperValue;
             SilverValue       = silverValue;
@@ -71,11 +76,19 @@ namespace RebirthStudios.DataAccessLayer
             _dataTables.Init();
 
             StatusEffect_EffectsGetList();
+            
+            var methods = typeof(DataTableStoredProcs).GetMethods(BindingFlags.Static | BindingFlags.Public);
+            foreach (var method in methods)
+            {
+                if(method.GetParameters().Length == 0) 
+                    method.Invoke(null, null);
+            }
         }
 
 
         public void Dispose()
         {
+            PlayerAccounts.Dispose();
             _dataTables.Dispose();
         }
 
@@ -83,6 +96,7 @@ namespace RebirthStudios.DataAccessLayer
         {
             Logger!.Log("Processing SQL Updates");
             _dataTables.ProcessSqlUpdates();
+            PlayerAccounts.FlushPendingWritesAsync().GetAwaiter().GetResult();
         }
         #region Tables
 
@@ -1533,7 +1547,7 @@ namespace RebirthStudios.DataAccessLayer
          public static PlayerAccountRequestResponse PlayerAccount_GetPassword(string userName, string password)
          {
              int accountId = -1;
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool admin = false;
@@ -1578,7 +1592,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static CharacterModel[] Character_GetList(int playerAccountId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
              CharacterModel[] charactersList = new CharacterModel[MaxCharacters!.Value];
@@ -1655,7 +1669,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static CharacterModel Character_GetInfo(int characterId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              CharacterModel characterData;
@@ -2439,7 +2453,7 @@ namespace RebirthStudios.DataAccessLayer
          //PLAYER
          // public static int PlayerAccount_Create(in Guid steamId, string steamName, string userName, string emailAddress)
          // {
-         //     Stopwatch? watch                = null;
+         //     Stopwatch watch                = null;
          //    if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
          //     int playerAccountId = -1;
          //     string password = "testpassword";
@@ -2468,7 +2482,7 @@ namespace RebirthStudios.DataAccessLayer
          // }
          public static int PlayerAccount_Create(string userName, string password)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              Guid steamId = Guid.NewGuid();
              int playerAccountId = -1;
@@ -2501,7 +2515,7 @@ namespace RebirthStudios.DataAccessLayer
          //UPDATE
          public static int PlayerAccount_ResetPassword(string userName, string password)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              int playerAccountId = -1;
              try
@@ -2520,7 +2534,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_AbilitiesAdd(int characterId, string abilityGlobalObject, ushort abilityId, int abilityExperience)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -2546,7 +2560,7 @@ namespace RebirthStudios.DataAccessLayer
              ushort         abilityId,
              int abilityExperience)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -2568,7 +2582,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_AchievementsUnlock(int characterId, string achievementGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -2609,7 +2623,7 @@ namespace RebirthStudios.DataAccessLayer
              string status           = "active";
 
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
              try
@@ -2735,7 +2749,7 @@ namespace RebirthStudios.DataAccessLayer
          /// <returns></returns>
          public static bool Character_BagAdd(Guid spawnedWorldObjectId, Guid instancedItemId, byte bagLocationId, byte bagSize)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -2777,7 +2791,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_BagRemove(Guid spawnedWorldObjectId, byte bagIndex)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
@@ -2798,7 +2812,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_BuybacksAdd(int characterId, Guid instancedItemId, long soldDateTimeBinary)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -2819,7 +2833,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_BuybacksRemove(int characterId, Guid instancedItemId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -2863,7 +2877,7 @@ namespace RebirthStudios.DataAccessLayer
              short copperCost, short adventuringTokensCost, short craftingTokensCost, short gatheringTokensCost,
              string description)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -2929,10 +2943,10 @@ namespace RebirthStudios.DataAccessLayer
              return success;
          }
          
-         public static string? Character_Delete(int characterId)
+         public static string Character_Delete(int characterId)
          {
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
 
@@ -2991,7 +3005,7 @@ namespace RebirthStudios.DataAccessLayer
          {
              var moveEquipmentLocationId = 99; // Used to move item out of slot
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
              bool success = false;
@@ -3029,7 +3043,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_EquipmentRemove(Guid spawnedWorldObjectId, byte equipmentSlotIndex)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -3051,7 +3065,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_InventoryAddItem(Guid spawnedWorldObjectId, Guid instancedItemId, byte bagIndex, byte slotIndex)
          {
              bool       success               = false;
-             Stopwatch? watch                 = null;
+             Stopwatch watch                 = null;
              if (SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
              try
@@ -3094,7 +3108,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_InventoryBagChangeLocation(Guid spawnedWorldObjectId, byte fromBagIndex, byte toBagIndex)
          {
              var tempBagIndex = 99; // Used to move item out of slot
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -3179,7 +3193,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_InventoryBagEquip(Guid fromSpawnedWorldObjectId, byte fromBagIndex, byte fromSlotIndex, Guid toSpawnedObjectId, byte toBagIndex, byte bagSize)
          {
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
              // TYPE 0: FIND instancedItemId for the container BAG where the bag you want de-equip will be placed. 
@@ -3203,7 +3217,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_InventoryBagsSwap(Guid fromSpawnedObjectId, byte fromBagIndex, Guid toSpawnedObjectId, byte toBagIndex)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3236,7 +3250,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_InventoryDeleteAll(Guid spawnedWorldObjectId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
@@ -3266,7 +3280,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_InventoryEquip(Guid spawnedWorldObjectId, byte equipmentSlotId, byte bagIndex, byte slotIndex, byte equipType)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
               //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
@@ -3372,7 +3386,7 @@ namespace RebirthStudios.DataAccessLayer
              byte toQuantity)
          {
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3421,7 +3435,7 @@ namespace RebirthStudios.DataAccessLayer
              byte toSlotIndex)
          {
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success;
@@ -3513,7 +3527,7 @@ namespace RebirthStudios.DataAccessLayer
              Guid spawnedWorldObjectId, 
              Guid instancedItemId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
                  
@@ -3538,7 +3552,7 @@ namespace RebirthStudios.DataAccessLayer
              byte slotIndex, 
              Guid instancedItemId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -3585,7 +3599,7 @@ namespace RebirthStudios.DataAccessLayer
              Guid instancedItemId)
          {
              
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3660,7 +3674,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_InventoryUpdateQuantity(Guid instancedItemId, byte quantity)
          {
 
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success                    = false;
@@ -3679,7 +3693,7 @@ namespace RebirthStudios.DataAccessLayer
 
                  success = true;
              }
-             catch (NullReferenceException e)
+             catch (NullReferenceException)
              {
                  throw;
              }
@@ -3698,7 +3712,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_MailDelete(Guid mailId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              try
@@ -3718,12 +3732,12 @@ namespace RebirthStudios.DataAccessLayer
          }
 
          public static bool Character_MailSend(Guid mailId, byte mailIndex, int senderCharacterId,
-             string? senderName, string mailSubject, string mailBody, uint gold, byte silver, byte copper, bool currencyClaimed,
+             string senderName, string mailSubject, string mailBody, uint gold, byte silver, byte copper, bool currencyClaimed,
               bool contentsClaimed, bool unread, int recipientCharacterId, long sentDateTimeBinary, long appearDateTimeBinary,
              long deleteDateTimeBinary)
          {
              Logger!.Log($"Character_MailSend");
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -3755,7 +3769,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_MailSendAttachments(Guid mailId, Guid instancedItemId, byte slotIndex, long sentDateTimeBinary)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              var sentDateTime    = DateTime.FromBinary(sentDateTimeBinary);
@@ -3782,7 +3796,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_MailTakeAttachment(Guid mailId, byte slotIndex)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              try
@@ -3804,7 +3818,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_MailClaimCurrency(Guid mailId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3826,7 +3840,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_MailClaimContents(Guid mailId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3849,7 +3863,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_MailRead(Guid mailId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3873,7 +3887,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_MissionAbandoned(int characterId, Guid missionId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3895,7 +3909,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_MissionAccepted(int characterId, Guid missionId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success                    = false;
@@ -3916,7 +3930,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_MissionCompleted(int characterId, Guid missionId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success                    = false;
@@ -3937,7 +3951,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_QuestAbandoned(int characterId, string questGlobalObject)
          {
-             Stopwatch? watch = null;
+             Stopwatch watch = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -3964,7 +3978,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_QuestAccepted(int characterId, string questGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              
              bool success = false;
@@ -4007,7 +4021,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_QuestInsertObjectives(string questGlobalObject, int characterId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -4040,7 +4054,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_QuestInsertUpdateObjectives(int characterId, string questGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -4088,7 +4102,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_QuestCompleted(int characterId, string questGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -4112,7 +4126,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_QuestUpdate(int characterId, string questGlobalObject, string objectiveGlobalObject, int currentProgress)   
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -4138,7 +4152,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_RecipeAdd(int characterId, string recipeGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -4161,7 +4175,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_SkillsAdd(int characterId, string globalObject, ushort skillId, int characterSkillExperience,
              byte characterSkillRankId, byte characterSkillLevelId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              try
@@ -4183,7 +4197,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_SkillsUpdate(int characterId, string globalObject, int experienceAdded, byte characterSkillRankId, byte characterSkillLevelId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -4210,7 +4224,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_TitlesUnlock(int characterId, string titleGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              try
@@ -4230,7 +4244,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_SaveExperience(int characterId, int characterExperience, byte rankId, byte levelId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              try
@@ -4259,7 +4273,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_SaveLocation(Guid spawnedWorldObjectId, double coordinateX, double coordinateY, double coordinateZ, int chunk, double rotationX, double rotationY, double rotationZ)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -4294,7 +4308,7 @@ namespace RebirthStudios.DataAccessLayer
          }
          public static bool Character_StatsUpdate(int characterId, byte statTypeId, byte statId, float characterStatValue)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
 
@@ -4390,7 +4404,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_HistoryAddCollected(int characterId, byte rarityId, string itemGlobalObject, 
          byte quantity)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              Instance!._dataTableSelects.AddHistoryCharacterCollectedDataRow(characterId, rarityId,itemGlobalObject, quantity);
 
@@ -4402,7 +4416,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_HistoryAddCombat(int characterId, int blocks, int blocked, int strikesReceived, 
              int strikesGiven, int damageReceived, int damageGiven)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              Instance!._dataTableSelects.AddHistoryCharacterCombatDataRow(characterId, blocks, blocked, strikesReceived, strikesGiven,damageReceived, damageGiven);
              Logger!.LogProfiling($"DataTableStoredProcs.Character_HistoryAddCombat took {watch!.ElapsedTicks/10000f} ms");
@@ -4412,7 +4426,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_HistoryAddCrafted(int characterId, byte rarityId, string itemGlobalObject, byte quantity)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              //  NEW ROW
              Instance!._dataTableSelects.AddHistoryCharacterCraftedDataRow(characterId, rarityId, itemGlobalObject,quantity);
@@ -4424,7 +4438,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_HistoryAddDeath(int characterId, Guid killedBySpawnedWorldId, int globalTierId, int globalRankId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew(); 
              Instance!._dataTableSelects.AddHistoryCharacterDeathDataRow(characterId, killedBySpawnedWorldId, globalTierId, globalRankId);
              Logger!.LogProfiling($"DataTableStoredProcs.Character_HistoryAddDeath took {watch!.ElapsedTicks/10000f} ms");
@@ -4434,15 +4448,13 @@ namespace RebirthStudios.DataAccessLayer
          
          public static void Character_HistoryAddGathered(int characterId, string gatherableGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
-             bool success = false;
-             
+
 
              try
              {
                  Instance!._dataTableSelects.AddHistoryCharacterGatheredDataRow(characterId, gatherableGlobalObject);
-                 success = true;
              }
              catch (Exception e)
              {
@@ -4456,7 +4468,7 @@ namespace RebirthStudios.DataAccessLayer
 
          public static bool Character_HistoryAddKill(int characterId, byte entityTierId, string entityGlobalObject)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
              bool success = false;
              
@@ -4478,7 +4490,7 @@ namespace RebirthStudios.DataAccessLayer
          
          public static bool Character_HistoryAddLooted(int characterId, string itemGlobalObject, byte rarityId, byte quantity)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
 
@@ -4492,7 +4504,7 @@ namespace RebirthStudios.DataAccessLayer
          public static bool Character_HistoryAddQuest(int characterId,
              byte questTypeId, byte questTierId, byte questRankId)
          {
-             Stopwatch? watch                = null;
+             Stopwatch watch                = null;
              if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
              Instance!._dataTableSelects.AddHistoryCharacterQuestDataRow(characterId, questTypeId, questTierId, questRankId);
@@ -5036,7 +5048,7 @@ namespace RebirthStudios.DataAccessLayer
         public static bool InstancedItems_AmmunitionCreate(string globalObject, byte rarityId, byte qualityId, byte quantity,
             float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, Guid spawnedWorldObjectId, Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5075,7 +5087,7 @@ namespace RebirthStudios.DataAccessLayer
             float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, Guid spawnedWorldObjectId, 
             Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5112,7 +5124,7 @@ namespace RebirthStudios.DataAccessLayer
             float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, byte bagSize, Guid spawnedWorldObjectId,
             Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
 
@@ -5149,7 +5161,7 @@ namespace RebirthStudios.DataAccessLayer
             byte quantity, float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, 
             Guid spawnedWorldObjectId, Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5186,7 +5198,7 @@ namespace RebirthStudios.DataAccessLayer
             byte quantity, float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, 
             Guid spawnedWorldObjectId, Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5223,7 +5235,7 @@ namespace RebirthStudios.DataAccessLayer
             float durabilityPercentage,bool wasCrafted, string crafterName, bool wasLooted,  Guid spawnedWorldObjectId,
             Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
 
@@ -5259,7 +5271,7 @@ namespace RebirthStudios.DataAccessLayer
         public static bool InstancedItems_WeaponCreate(string globalObject, byte rarityId, byte qualityId, byte quantity, 
             float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, Guid spawnedWorldObjectId, Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5294,7 +5306,7 @@ namespace RebirthStudios.DataAccessLayer
         }
         public static bool InstancedItems_IngredientAdd(Guid instancedItemId, string ingredientGlobalObject)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5321,7 +5333,7 @@ namespace RebirthStudios.DataAccessLayer
         }
         public static bool InstancedItems_DurabilityUpdate(Guid instancedItemId, float durabilityPercentage)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5346,7 +5358,7 @@ namespace RebirthStudios.DataAccessLayer
         }
         public static bool InstancedItems_IsLooted(Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5377,7 +5389,7 @@ namespace RebirthStudios.DataAccessLayer
         private static bool InstancedItems_SplitCreateGuid(string globalObject, byte rarityId, byte qualityId, byte quantity,
           float durabilityPercentage, bool wasCrafted, string crafterName, bool wasLooted, Guid spawnedWorldObjectId, Guid instancedItemId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -5419,7 +5431,8 @@ namespace RebirthStudios.DataAccessLayer
                 }
                 else if (itemTypeId == (byte)ItemTypes.Equipment)
                 {
-                    byte itemSubTypeId = (byte)sI[(byte)ScriptableItemsColumns.itemSubTypeId];
+                    var sE = Instance._dataTableSelects.ScriptableEquipmentSelectRows(globalObject)[0];
+                    byte itemSubTypeId = (byte)sE[(byte)ScriptableEquipmentColumns.equipmentMainTypeId];
                     if (itemSubTypeId == (byte) EquipmentTypes.Armor) 
                     {
                         Instance._dataTableSelects.AddInstancedArmorDataRow(instancedItemId, globalObject);
@@ -5961,12 +5974,13 @@ namespace RebirthStudios.DataAccessLayer
                 Logger!.LogProfiling($"DataTableStoredProcs.globalObject: {globalObject}");
                 //var sK = scriptableSkillsData[globalObject];
                 var gOb            = Instance._dataTables.GlobalObjectsDictionary[globalObject];
+                Logger!.LogProfiling($"{gOb[(byte)GlobalObjectsColumns.statusId]}, {gOb[(byte)GlobalObjectsColumns.statusId].GetType()}");
                 var globalStatusId = (byte) gOb[(byte)GlobalObjectsColumns.statusId];
                 
                 var sO = Instance._dataTables.ScriptableObjectsDictionary[globalObject];
                 ushort skillId = (ushort) (int)Instance._dataTables.ScriptableSkillsDictionary[(string)sR[(byte)ScriptableRecipesColumns.requiredSkillGlobalObject]][(byte)ScriptableSkillsColumns.scriptableSkillId];    
                     
-                var recipeId = (ushort) (int) sR[(byte)ScriptableRecipesColumns.id];
+                var recipeId = (ushort) (short) sR[(byte)ScriptableRecipesColumns.id];
                 var recipeName = (string) gOb[(byte)GlobalObjectsColumns.globalObjectName];
                 var recipeDescription = (string) sR[(byte)ScriptableRecipesColumns.recipeDescription];
                 var recipeTierId = (byte) gOb[(byte)GlobalObjectsColumns.globalTierId];
@@ -5975,8 +5989,8 @@ namespace RebirthStudios.DataAccessLayer
                 var containerTypeId = (byte) sR[(byte)ScriptableRecipesColumns.requiredContainerTypeId];
                 var craftDuration = (float) (decimal) sR[(byte)ScriptableRecipesColumns.craftDuration];
                 var requiredSkillTier = (byte) sR[(byte)ScriptableRecipesColumns.minimumSkillRankId];
-                var requiredSkillLevel = (byte) sR[(byte)ScriptableRecipesColumns.minimumSkillLevelId];
-                var recipeExperience = (uint) (int) sR[(byte)ScriptableRecipesColumns.experienceSkillTotal];
+                var requiredSkillLevel = (byte) (short) sR[(byte)ScriptableRecipesColumns.minimumSkillLevelId];
+                var recipeExperience = (uint) (decimal) sR[(byte)ScriptableRecipesColumns.experienceSkillTotal];
                 var dynamicRecipe = (bool) sR[(byte)ScriptableRecipesColumns.dynamicRecipe];
                 RecipeModel recipe = new RecipeModel(recipeId, globalObject, globalStatusId, recipeName, recipeDescription, 
                     recipeTierId, skillId, globalObjectTypeId, scriptableObjectPath, containerTypeId, craftDuration, 
@@ -6315,8 +6329,8 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue        = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue        = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId             = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
                 ushort maxDurability      = (ushort) (int) sI[(byte)ScriptableItemsColumns.itemDurabilityMax];
@@ -6381,8 +6395,8 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue        = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue        = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId             = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
                 ushort maxDurability      = (ushort) (int) sI[(byte)ScriptableItemsColumns.itemDurabilityMax];
@@ -6417,7 +6431,7 @@ namespace RebirthStudios.DataAccessLayer
                 
                 byte requiredStatTypeId = (byte)sER[(byte)ScriptableEquipmentRequirementsColumns.statTypeId];
                 byte requiredStatId = (byte)sER[(byte)ScriptableEquipmentRequirementsColumns.statId];
-                int requiredAmount = (int)sER[(byte)ScriptableEquipmentRequirementsColumns.requiredAmount];
+                int requiredAmount = (short)sER[(byte)ScriptableEquipmentRequirementsColumns.requiredAmount];
                 
                 EquipmentRequirementModel equipmentRequirementModel = new EquipmentRequirementModel(requiredStatTypeId, requiredStatId, requiredAmount);
                 if(!myDict.ContainsKey(globalObject)) myDict.Add(globalObject, new List<EquipmentRequirementModel>());
@@ -6461,8 +6475,8 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue        = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue        = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId             = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
                 ushort maxDurability      = (ushort) (int) sI[(byte)ScriptableItemsColumns.itemDurabilityMax];
@@ -6515,8 +6529,9 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId           = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId         = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
+
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
                 ushort maxDurability    = (ushort) (int) sI[(byte)ScriptableItemsColumns.itemDurabilityMax];
@@ -6549,10 +6564,10 @@ namespace RebirthStudios.DataAccessLayer
 
             foreach (DataRow aRTORM in Instance!._dataTables.AbilityRanksToObjectRanksMappingDataTable.Rows)
             {
-                string entityGlobalObject  = (string) aRTORM[(byte)AbilityRanksToObjectRanksMappingColumns.globalObject];
-                var entityRankId            = (byte) (aRTORM[(byte)AbilityRanksToObjectRanksMappingColumns.rankId]);
-                string abilityGlobalObject = (string) (aRTORM[(byte)AbilityRanksToObjectRanksMappingColumns.abilityGlobalObject]);
-                var abilityRankId           = (byte) aRTORM[(byte)AbilityRanksToObjectRanksMappingColumns.abilityRankId];
+                string entityGlobalObject  = (string) aRTORM[(byte)AbilityLevelsToObjectSpawnablesMappingColumns.globalObject];
+                var entityRankId            = byte.Parse(((string) (aRTORM[(byte)AbilityLevelsToObjectSpawnablesMappingColumns.scriptableObjectSpawnable])).Replace(entityGlobalObject + "Level", "").Split("Variation")[0]);
+                string abilityGlobalObject = (string) (aRTORM[(byte)AbilityLevelsToObjectSpawnablesMappingColumns.abilityGlobalObject]);
+                var abilityRankId           = byte.Parse(((string) aRTORM[(byte)AbilityLevelsToObjectSpawnablesMappingColumns.abilityScriptableObjectLevel]).Replace(abilityGlobalObject + "Level", ""));
                 
                 
                 if (Instance._dataTables.ScriptableObjectRanksDictionaryByNestedObjectCode.ContainsKey(entityGlobalObject))
@@ -6606,8 +6621,8 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId           = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
                 ushort maxDurability    = (ushort) (int) sI[(byte)ScriptableItemsColumns.itemDurabilityMax];
@@ -6660,8 +6675,8 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId           = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
 
@@ -6744,8 +6759,8 @@ namespace RebirthStudios.DataAccessLayer
                 var    silverValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueSilver];
                 var    copperValue      = (byte)sI[(byte)ScriptableItemsColumns.itemValueCopper];
                 var    tierId           = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
-                var    rarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityBaseId];
-                var    maxRarityId           = (byte)sI[(byte)ScriptableItemsColumns.itemRarityMaxId];
+                var    rarityId           = (byte)RarityTypes.Common;
+                var maxRarityId = (byte)(RarityTypes.MAX_VALUE - 1);
                 var    qualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityBaseId];
                 var    maxQualityId          = (byte)sI[(byte)ScriptableItemsColumns.itemQualityMaxId];
                 ushort maxDurability    = (ushort) (int) sI[(byte)ScriptableItemsColumns.itemDurabilityMax];
@@ -6823,10 +6838,10 @@ namespace RebirthStudios.DataAccessLayer
                     string lootTableGlobalObject = (string)wOR[(byte)SpawnablesToLootTablesColumns.lootTableGlobalObject];
                     uint   minCurrencyReward     = (uint)(int) wOR[(byte)SpawnablesToLootTablesColumns.minCurrencyReward];
                     uint   maxCurrencyReward     = (uint)(int) wOR[(byte)SpawnablesToLootTablesColumns.maxCurrencyReward];
-                    int   experienceRewardPlayer      = (int) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalPlayer];
-                    int   experienceRewardSkill      = (int) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalSkill];
+                    int   experienceRewardPlayer      = (int)(decimal) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalPlayer];
+                    int   experienceRewardSkill      = (int)(decimal) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalSkill];
                     int   skillRequired      = (int) wOR[(byte)SpawnablesToLootTablesColumns.skillRequired];
-                    byte imbuedType            = (byte) sOS[(byte)ScriptableObjectSpawnablesColumns.imbuedTypeId];
+                    byte imbuedType            = (byte) (int)sOS[(byte)ScriptableObjectSpawnablesColumns.imbuedTypeId];
                     byte entityTypeId  = (byte) sI[(byte)ScriptableInteractablesColumns.interactableTypeId];
   
                     List<string> prefabPaths = new List<string>();
@@ -6885,10 +6900,10 @@ namespace RebirthStudios.DataAccessLayer
                     }
                     uint minCurrencyReward = (uint) (int) wOR[(byte)SpawnablesToLootTablesColumns.minCurrencyReward];
                     uint maxCurrencyReward = (uint) (int) wOR[(byte)SpawnablesToLootTablesColumns.maxCurrencyReward];
-                    int experienceRewardPlayer  = (int) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalPlayer];
-                    int experienceRewardSkill  = (int) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalSkill];
+                    int experienceRewardPlayer  = (int) (decimal) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalPlayer];
+                    int experienceRewardSkill  = (int) (decimal) wOR[(byte)SpawnablesToLootTablesColumns.experienceTotalSkill];
                     int skillRequired  = (int) wOR[(byte)SpawnablesToLootTablesColumns.skillRequired];
-                    byte imbuedTypeId  = (byte) sOS[(byte)ScriptableObjectSpawnablesColumns.imbuedTypeId];
+                    byte imbuedTypeId  = (byte) (int) sOS[(byte)ScriptableObjectSpawnablesColumns.imbuedTypeId];
                     byte entityTypeId  = (byte) sE[(byte)ScriptableEntitiesColumns.entityTypeId];
                     
                     List<string> prefabPaths = new List<string>();
@@ -6993,7 +7008,7 @@ namespace RebirthStudios.DataAccessLayer
                 var tierId = (byte) sTG[(byte)ScriptableTotalsGatherColumns.gatherTierId];
                 var dataAttributeId = (byte) sTG[(byte)ScriptableTotalsGatherColumns.dataAttributeTypeId];
                 var imbuedTypeId = (byte) sTG[(byte)ScriptableTotalsGatherColumns.imbuedTypeId];
-                var scriptableInteractableId = (ushort) (int) sI[(byte)ScriptableInteractablesColumns.id];
+                var scriptableInteractableId = (ushort) (short) sI[(byte)ScriptableInteractablesColumns.id];
                 GatherTotalModel gatherTotalData = new GatherTotalModel(totalId, gatherTypeId, gatherMainTypeId, gatherClassificationTypeId,
                     gatherSubTypeId, tierId, dataAttributeId, imbuedTypeId, scriptableInteractableId);
                 gatherTotals.Add(gatherTotalData);
@@ -7014,17 +7029,17 @@ namespace RebirthStudios.DataAccessLayer
                 var sT = Instance._dataTables.ScriptableTotalsDictionary[totalGlobalObject];
                 var sI = Instance._dataTables.ScriptableItemsDictionary[(string)sTC[(byte)ScriptableTotalsCraftColumns.craftRequiredGlobalObject]];
                 var totalId = (ushort)(int)sT[(byte)ScriptableTotalsColumns.scriptableTotalId];
-                var craftedTypeId = (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftTypeId];
+                var craftedTypeId = (ItemTypes)(byte) sTC[(byte)ScriptableTotalsCraftColumns.craftTypeId];
                 var craftedMainTypeId = (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftMainTypeId];
                 var craftedClassificationTypeId = (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftClassificationTypeId];
                 var craftedSubTypeId = (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftSubTypeId];
-                var rarityId = (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftRarityId];
+                var rarityId = (RarityTypes) (byte) sTC[(byte)ScriptableTotalsCraftColumns.craftRarityId];
                 var itemId = (ushort) (int) sI[(byte)ScriptableItemsColumns.scriptableItemId];
                 CraftTotalModel craftTotalData = new CraftTotalModel(totalId, craftedTypeId, craftedMainTypeId, 
                     craftedClassificationTypeId, craftedSubTypeId, rarityId, itemId);
                 craftTotals.Add(craftTotalData);
             }
-#if UNITY_EDITORz   
+#if UNITY_EDITOR   
             if(craftTotals.Count == 0) Logger!.LogWarning($"ERROR: ScriptableTotals_CraftGetList - 0 Results");
 #endif
             return craftTotals;
@@ -7515,7 +7530,7 @@ namespace RebirthStudios.DataAccessLayer
 
                 var    globalStatusId     = (byte) glO[(byte)GlobalObjectsColumns.statusId];
                 var    globalObjectPath = (string)sO[(byte)ScriptableObjectsColumns.scriptableObjectPath];
-                var    interactableId = (ushort)(int) sI[(byte)ScriptableInteractablesColumns.id];
+                var    interactableId = (ushort)(short) sI[(byte)ScriptableInteractablesColumns.id];
                 var    interactableName = (string)glO[(byte)GlobalObjectsColumns.globalObjectName];
                 byte   tierId = (byte) glO[(byte)GlobalObjectsColumns.globalTierId];
                 byte   globalObjectTypeId = (byte) glO[(byte)GlobalObjectsColumns.globalObjectTypeId];
@@ -7547,7 +7562,7 @@ namespace RebirthStudios.DataAccessLayer
 
                 var    globalStatusId     = (byte) glO[(byte)GlobalObjectsColumns.statusId];
                 var    globalObjectPath = (string)sO[(byte)ScriptableObjectsColumns.scriptableObjectPath];
-                var    interactableId = (ushort)(int) sI[(byte)ScriptableInteractablesColumns.id];
+                var    interactableId = (ushort)(short) sI[(byte)ScriptableInteractablesColumns.id];
                 var    interactableName = (string)glO[(byte)GlobalObjectsColumns.globalObjectName];
                 byte   tierId = (byte) glO[(byte)GlobalObjectsColumns.globalTierId];
                 byte   globalObjectTypeId = (byte) glO[(byte)GlobalObjectsColumns.globalObjectTypeId];
@@ -7582,7 +7597,7 @@ namespace RebirthStudios.DataAccessLayer
                 var    globalObjectPath = (string)sO[(byte)ScriptableObjectsColumns.scriptableObjectPath];
                 
                 var    globalStatusId     = (byte) glO[(byte)GlobalObjectsColumns.statusId];
-                var    interactableId = (ushort)(int) sI[(byte)ScriptableInteractablesColumns.id];
+                var    interactableId = (ushort)(short) sI[(byte)ScriptableInteractablesColumns.id];
                 var    interactableName = (string)glO[(byte)GlobalObjectsColumns.globalObjectName];
                 byte   tierId = (byte) glO[(byte)GlobalObjectsColumns.globalTierId];
                 byte   globalObjectTypeId = (byte) glO[(byte)GlobalObjectsColumns.globalObjectTypeId];
@@ -7613,7 +7628,7 @@ namespace RebirthStudios.DataAccessLayer
 
                 var    globalStatusId     = (byte) glO[(byte)GlobalObjectsColumns.statusId];
                 var    globalObjectPath = (string)sO[(byte)ScriptableObjectsColumns.scriptableObjectPath];
-                var    interactableId = (ushort)(int) sI[(byte)ScriptableInteractablesColumns.id];
+                var    interactableId = (ushort)(short) sI[(byte)ScriptableInteractablesColumns.id];
                 var    interactableName = (string)glO[(byte)GlobalObjectsColumns.globalObjectName];
                 byte   tierId = (byte)glO[(byte)GlobalObjectsColumns.globalTierId];
                 byte   globalObjectTypeId = (byte)glO[(byte)GlobalObjectsColumns.globalObjectTypeId];
@@ -7900,7 +7915,7 @@ namespace RebirthStudios.DataAccessLayer
                 var glO = Instance._dataTables.GlobalObjectsDictionary[globalObject];
                 var sWO = Instance._dataTables.ScriptableWorldObjectsDictionary[globalObject];
 
-                var    interactableId                 = (ushort)(int)sI[(byte)ScriptableInteractablesColumns.id];
+                var    interactableId                 = (ushort)(short)sI[(byte)ScriptableInteractablesColumns.id];
                 var  globalStatusId     = (byte) glO[(byte)GlobalObjectsColumns.statusId];
                 var    interactableName               = (string)glO[(byte)GlobalObjectsColumns.globalObjectName];
                 var    globalObjectPath               = (string)sO[(byte)ScriptableObjectsColumns.scriptableObjectPath];
@@ -7913,7 +7928,7 @@ namespace RebirthStudios.DataAccessLayer
                 string   skillGlobalObject = (string)sI[(byte)ScriptableInteractablesColumns.interactableRequiredSkillGlobalObject];
                 //int   skillExperienceGained          = (int)sG[(byte)ScriptableGatherablesColumns.];
                 var    requiredTier                  = (byte)sI[(byte)ScriptableInteractablesColumns.interactableRequiredSkillTierId];
-                var    requiredLevel                  = (byte)sI[(byte)ScriptableInteractablesColumns.requiredSkillLevelId];
+                var    requiredLevel                  = (byte)(short)sI[(byte)ScriptableInteractablesColumns.requiredSkillLevelId];
                 byte   gatherTypeId                   = (byte)sG[(byte)ScriptableGatherablesColumns.gatherTypeId];
                 byte   gatherableTypeId               = (byte)sG[(byte)ScriptableGatherablesColumns.gatherableTypeId];
                 byte   gatherableClassificationTypeId = (byte)sG[(byte)ScriptableGatherablesColumns.gatherableClassificationTypeId];
@@ -7965,7 +7980,7 @@ namespace RebirthStudios.DataAccessLayer
                 
                 var requiredSkillGlobalObject = (string)sI[(byte)ScriptableInteractablesColumns.interactableRequiredSkillGlobalObject];
                 
-                var            interactableId       = (ushort)(int)sI[(byte)ScriptableInteractablesColumns.id];
+                var            interactableId       = (ushort)(short)sI[(byte)ScriptableInteractablesColumns.id];
                 var  globalStatusId     = (byte) glO[(byte)GlobalObjectsColumns.statusId];
                 var            interactableName     = (string)glO[(byte)GlobalObjectsColumns.globalObjectName];
                 var            globalObjectPath     = (string)sO[(byte)ScriptableObjectsColumns.scriptableObjectPath];
@@ -8518,7 +8533,7 @@ namespace RebirthStudios.DataAccessLayer
             float scaleX, float scaleY, float scaleZ, byte rank, byte variationId, string prefabId, bool ignoreSpawnTable, 
             uint locationId, Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             bool success = false;
@@ -8566,7 +8581,7 @@ namespace RebirthStudios.DataAccessLayer
         
         public static bool SpawnedWorldObjects_AnimalDelete(Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -8596,7 +8611,7 @@ namespace RebirthStudios.DataAccessLayer
             float rotationZ, float scaleX, float scaleY, float scaleZ, byte rank, byte variationId, string prefabId, bool ignoreSpawnTable, 
             uint locationId, Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
@@ -8652,7 +8667,7 @@ namespace RebirthStudios.DataAccessLayer
         public static bool SpawnedWorldObjects_ContainerDelete(Guid spawnedWorldObjectId)
         {
             
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             bool success = false;
@@ -8685,7 +8700,7 @@ namespace RebirthStudios.DataAccessLayer
             float rotationZ, float scaleX, float scaleY, float scaleZ, byte rank, byte variationId, string prefabId, bool ignoreSpawnTable,
             uint locationId, Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             bool   success      = false;
@@ -8740,7 +8755,7 @@ namespace RebirthStudios.DataAccessLayer
         public static bool SpawnedWorldObjects_EnemyHumanoidDelete(Guid spawnedWorldObjectId)
         {
             
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             bool success = false;
@@ -8771,7 +8786,7 @@ namespace RebirthStudios.DataAccessLayer
             float rotationZ, float scaleX, float scaleY, float scaleZ, byte rank, byte variationId, string prefabId, bool ignoreSpawnTable,
             uint locationId, Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
@@ -8822,7 +8837,7 @@ namespace RebirthStudios.DataAccessLayer
         
         public static bool SpawnedWorldObjects_GatherableDelete(Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -8854,7 +8869,7 @@ namespace RebirthStudios.DataAccessLayer
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
             
             Logger!.Log($"SpawnedWorldObjects_InteractableCreate: {globalObject} - {spawnedWorldObjectId}");
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             string errorMessage = "";
@@ -8906,7 +8921,7 @@ namespace RebirthStudios.DataAccessLayer
         {
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId); 
             Logger!.Log($"SpawnedWorldObjects_InteractableDelete: {spawnedWorldObjectId}");
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -8935,7 +8950,7 @@ namespace RebirthStudios.DataAccessLayer
         {
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
             Logger!.Log($"SpawnedWorldObjects_MonsterCreate: {monsterGlobalObject} - {spawnedWorldObjectId}");
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             string errorMessage = "";
@@ -8979,7 +8994,7 @@ namespace RebirthStudios.DataAccessLayer
         
         public static bool SpawnedWorldObjects_MonsterDelete(Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -9012,7 +9027,7 @@ namespace RebirthStudios.DataAccessLayer
         {
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
             Logger!.Log($"SpawnedWorldObjects_NpcCreate: {npcGlobalObject}, {variationId}, {locationId} - {spawnedWorldObjectId}");
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool   success                  = false;
             string errorMessage             = "";
@@ -9057,7 +9072,7 @@ namespace RebirthStudios.DataAccessLayer
         {
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
             Logger!.Log($"SpawnedWorldObjects_NpcDelete: {spawnedWorldObjectId}");
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             bool success = false;
             
@@ -9087,7 +9102,7 @@ namespace RebirthStudios.DataAccessLayer
             short priceTokenGathering, short priceTokenCrafting)
         {
             
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
             bool success = false;
@@ -9128,7 +9143,7 @@ namespace RebirthStudios.DataAccessLayer
             float scaleX, float scaleY, float scaleZ, byte rank, byte variationId, string prefabId, bool ignoreSpawnTable, uint locationId,
                 Guid spawnedWorldObjectId)
         {
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
             bool   success      = false;
@@ -9183,7 +9198,7 @@ namespace RebirthStudios.DataAccessLayer
         public static bool SpawnedWorldObjects_VendorDelete(Guid spawnedWorldObjectId)
         {
             
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             bool success                    = false;
@@ -9211,7 +9226,7 @@ namespace RebirthStudios.DataAccessLayer
            byte rarityId, byte currentStock)
         {
 
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
             
             //var spawnedWorldObjectId = new Guid(spawnedWorldObjectId);
@@ -9237,7 +9252,7 @@ namespace RebirthStudios.DataAccessLayer
         {
 
 
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
             bool success = false;
@@ -9274,7 +9289,7 @@ namespace RebirthStudios.DataAccessLayer
         public static bool SpawnedWorldObjects_VendorRestock(Guid spawnedWorldObjectId, long lastRestockTimeBinary)
         {
 
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
             bool success = false;
@@ -9304,7 +9319,7 @@ namespace RebirthStudios.DataAccessLayer
         {
             
 
-            Stopwatch? watch                = null;
+            Stopwatch watch                = null;
             if(SQL_PROFILING_ENABLED) watch = Stopwatch.StartNew();
 
             bool success = false;

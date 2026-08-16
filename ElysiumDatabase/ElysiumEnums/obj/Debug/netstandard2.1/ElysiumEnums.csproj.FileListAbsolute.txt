@@ -38,3 +38,13 @@ C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\
 C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.csproj.CoreCompileInputs.cache
 C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.dll
 C:\Users\ericr\RiderProjects\Data-Access-Layer\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.pdb
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\bin\Debug\netstandard2.1\ElysiumEnums.deps.json
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\bin\Debug\netstandard2.1\ElysiumEnums.dll
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\bin\Debug\netstandard2.1\ElysiumEnums.pdb
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.AssemblyInfoInputs.cache
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.AssemblyInfo.cs
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.csproj.CoreCompileInputs.cache
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.sourcelink.json
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.dll
+C:\Users\logan\RiderProjects\Data-Access-Layer2\ElysiumDatabase\ElysiumEnums\obj\Debug\netstandard2.1\ElysiumEnums.pdb

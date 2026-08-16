@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CharactersMailAttachmentsColumns : byte
+	internal enum CharactersMailAttachmentsColumns : byte
 	{
 		charactersMailAttachmentId = 0,
 		charactersMailId = 1,

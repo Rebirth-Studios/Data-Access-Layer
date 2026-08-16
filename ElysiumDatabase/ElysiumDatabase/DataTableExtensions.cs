@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using RebirthStudios.Logging;
 
 namespace RebirthStudios.DataAccessLayer
 {

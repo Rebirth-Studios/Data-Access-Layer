@@ -1,8 +1,3 @@
-using System.Reflection;
-using Newtonsoft.Json;
-using RebirthStudios.DataAccessLayer;
-using RebirthStudios.DataAccessLayer.Models;
-
 internal class ClientClassReader
 {
     private string _filePath;
@@ -48,7 +43,7 @@ internal class ClientClassReader
         int      timesStuck     = 0;
         var      stuckLastIndex = 0;
         string   header         = "";
-        string[] parameters     = null;
+        string[]? parameters     = null;
         for (int i = 0; i < lines.Length; i++)
         {
             var line = lines[i];
@@ -146,7 +141,7 @@ internal class ClientClassReader
                 //Console.WriteLine(lines[lastLineIndex-1]);
                 startLine     = -1;
                 lastLineIndex = -1; 
-                methods.Add(data);
+                methods.Add(data!);
             }
             
             

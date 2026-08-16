@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using RebirthStudios.DataAccessLayer;
+using RebirthStudios.Logging;
 
 public class QueueReader
 {
@@ -28,6 +29,8 @@ public class QueueReader
     public static  int            totalFilesProcessed;
     public static  double         totalSkipped;
     public static  string         status = "";
+    
+    private static CancellationTokenSource cancellationToken = new CancellationTokenSource();
 
     private static Thread _queueThread;
 
@@ -37,7 +40,8 @@ public class QueueReader
         _dataTables = dataTableStoredProcs._dataTables;
         
         //folderPath  = Application.persistentDataPath;
-        _queueThread?.Abort();
+        cancellationToken?.Cancel();
+        cancellationToken = new CancellationTokenSource();
         ClearProcessedFiles();
         _queueThread = new Thread(QueueThread);
         _queueThread.Start();
@@ -86,7 +90,7 @@ public class QueueReader
 
     public static void OnApplicationQuit()
     {
-        _queueThread?.Abort();
+        cancellationToken?.Cancel();
     }
 
     private static void QueueThread()
@@ -96,7 +100,7 @@ public class QueueReader
             Console.WriteLine($"Queue thread starter. Running at 1 ticks per minute.");
             DateTime nextLoop = DateTime.Now;
             Thread.Sleep(15);
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 UpdateMain(); 
                 _dataTables.ProcessSqlUpdates();
@@ -108,7 +112,7 @@ public class QueueReader
         catch (Exception e)
         {
             Logger.LogException(e);
-            _queueThread?.Abort();
+            cancellationToken.Cancel();
         }
     }
 
@@ -179,7 +183,7 @@ public class QueueReader
         catch (Exception e)
         {
             Logger.LogError($"ERROR - ProcessNextFile: {e}");
-            Thread.ResetAbort();
+            cancellationToken.Cancel();
         }
     }
 

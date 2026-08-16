@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum AbilityLevelsToObjectSpawnablesMappingColumns : byte
+	internal enum AbilityLevelsToObjectSpawnablesMappingColumns : byte
 	{
 		abilityRanksToObjectRanksMappingId = 0,
 		abilityScriptableObjectLevel = 1,

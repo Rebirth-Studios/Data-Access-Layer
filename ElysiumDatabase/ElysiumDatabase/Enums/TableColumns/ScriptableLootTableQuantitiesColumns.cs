@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableLootTableQuantitiesColumns : byte
+	internal enum ScriptableLootTableQuantitiesColumns : byte
 	{
 		lootQuantityId = 0,
 		globalObject = 1,

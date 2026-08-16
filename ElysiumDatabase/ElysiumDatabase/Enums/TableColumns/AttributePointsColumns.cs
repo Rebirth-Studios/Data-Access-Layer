@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum AttributePointsColumns : byte
+	internal enum AttributePointsColumns : byte
 	{
 		attributePointsId = 0,
 		tierId = 1,

@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum CharactersMailColumns : byte
+	internal enum CharactersMailColumns : byte
 	{
 		charactersMailId = 0,
 		autoDeleteDateTime = 1,

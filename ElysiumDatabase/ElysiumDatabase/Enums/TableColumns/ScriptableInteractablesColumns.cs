@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableInteractablesColumns : byte
+	internal enum ScriptableInteractablesColumns : byte
 	{
 		id = 0,
 		globalObject = 1,

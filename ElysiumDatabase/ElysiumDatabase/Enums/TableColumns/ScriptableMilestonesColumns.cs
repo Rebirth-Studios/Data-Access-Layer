@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableMilestonesColumns : byte
+	internal enum ScriptableMilestonesColumns : byte
 	{
 		scriptableMilestonesId = 0,
 		milestoneRequiredTotal = 1,

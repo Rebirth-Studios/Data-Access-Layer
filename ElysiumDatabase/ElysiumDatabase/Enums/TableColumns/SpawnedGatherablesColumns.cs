@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum SpawnedGatherablesColumns : byte
+	internal enum SpawnedGatherablesColumns : byte
 	{
 		lastUpdate = 0,
 		spawnedWorldObjectId = 1,

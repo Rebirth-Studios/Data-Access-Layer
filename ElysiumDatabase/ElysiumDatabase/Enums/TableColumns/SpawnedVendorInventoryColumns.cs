@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum SpawnedVendorInventoryColumns : byte
+	internal enum SpawnedVendorInventoryColumns : byte
 	{
 		spawnedVendorInventoryId = 0,
 		rarityId = 1,

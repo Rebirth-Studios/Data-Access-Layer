@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum SpawnerLocationsColumns : byte
+	internal enum SpawnerLocationsColumns : byte
 	{
 		locationId = 0,
 		positionX = 1,

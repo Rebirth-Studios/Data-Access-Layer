@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum ScriptableAbilitiesLevelsActivationCostsColumns : byte
+	internal enum ScriptableAbilitiesLevelsActivationCostsColumns : byte
 	{
 		scriptableAbilitiesRanksActivationCostId = 0,
 		cost = 1,

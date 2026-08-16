@@ -1,3 +1,2 @@
-CREATE SCHEMA [runtime]
-    AUTHORIZATION [dbo];
-
+ALTER SCHEMA NewSchema
+    TRANSFER dbo.YourTable;

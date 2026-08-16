@@ -1,6 +1,6 @@
 namespace RebirthStudios.DataAccessLayer.Enums.TableColumns
 {
-	public enum LevelRequirementsColumns : byte
+	internal enum LevelRequirementsColumns : byte
 	{
 		rankId = 0,
 		levelId = 1,
